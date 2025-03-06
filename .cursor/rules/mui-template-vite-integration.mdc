@@ -1,9 +1,3 @@
----
-description: Standards for integrating MUI templates with Vite
-globs: ["integrations/vite-mui-*/**/*"]
-alwaysApply: true
----
-
 # MUI Template Vite Integration Standards
 
 Standards for integrating MUI templates into Vite projects.
@@ -13,7 +7,7 @@ name: mui-template-vite-integration
 description: Standards for integrating MUI templates with Vite
 filters:
   - type: file_extension
-    pattern: "\\.(ts|tsx|json)$"
+    pattern: "\\.(ts|tsx|js|jsx)$"
   - type: event
     pattern: "file_create"
 
@@ -44,110 +38,71 @@ actions:
            "dependencies": {
              "@emotion/react": "^11.11.3",
              "@emotion/styled": "^11.11.0",
-             "@mui/icons-material": "^5.15.10",
+             "@mui/icons-material": "^6.4.7",
              "@mui/lab": "^5.0.0-alpha.165",
              "@mui/material": "^6.4.7",
-             "react": "^18.2.0",
-             "react-dom": "^18.2.0"
+             "react": "^19.0.0",
+             "react-dom": "^19.0.0"
            },
            "devDependencies": {
-             "@types/react": "^18.2.55",
-             "@types/react-dom": "^18.2.19",
-             "@typescript-eslint/eslint-plugin": "^6.21.0",
-             "@typescript-eslint/parser": "^6.21.0",
+             "@types/react": "^19.0.0",
+             "@types/react-dom": "^19.0.0",
+             "@typescript-eslint/eslint-plugin": "^7.0.1",
+             "@typescript-eslint/parser": "^7.0.1",
              "@vitejs/plugin-react": "^4.2.1",
              "eslint": "^8.56.0",
              "eslint-plugin-react-hooks": "^4.6.0",
              "eslint-plugin-react-refresh": "^0.4.5",
              "typescript": "^5.2.2",
-             "vite": "^5.1.0"
+             "vite": "^5.1.3"
            }
          }
          ```
 
-      3. App.tsx Structure:
-         ```tsx
-         import * as React from 'react';
-         import Template from './components/Template';
-
-         function App() {
-           const [mode, setMode] = React.useState<'light' | 'dark'>('light');
-
-           const toggleColorMode = () => {
-             setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'));
-           };
-
-           return <Template mode={mode} onToggleColorMode={toggleColorMode} />;
-         }
-
-         export default App;
-         ```
-
-      4. main.tsx Structure:
-         ```tsx
-         import React from 'react';
-         import ReactDOM from 'react-dom/client';
-         import App from './App';
-         import './index.css';
-
-         ReactDOM.createRoot(document.getElementById('root')!).render(
-           <React.StrictMode>
-             <App />
-           </React.StrictMode>
-         );
-         ```
-
-      5. TypeScript Configuration:
-         ```json
-         // tsconfig.json
-         {
-           "compilerOptions": {
-             "target": "ES2020",
-             "useDefineForClassFields": true,
-             "lib": ["ES2020", "DOM", "DOM.Iterable"],
-             "module": "ESNext",
-             "skipLibCheck": true,
-             "moduleResolution": "bundler",
-             "allowImportingTsExtensions": true,
-             "resolveJsonModule": true,
-             "isolatedModules": true,
-             "noEmit": true,
-             "jsx": "react-jsx",
-             "strict": true,
-             "noUnusedLocals": true,
-             "noUnusedParameters": true,
-             "noFallthroughCasesInSwitch": true
-           },
-           "include": ["src"],
-           "references": [{ "path": "./tsconfig.node.json" }]
-         }
-         ```
-
-      6. Vite Configuration:
+      3. Vite Configuration:
          ```ts
          // vite.config.ts
          import { defineConfig } from 'vite';
          import react from '@vitejs/plugin-react';
+         import path from 'path';
 
          export default defineConfig({
            plugins: [react()],
            server: {
              port: 5173,
              open: true
+           },
+           resolve: {
+             alias: {
+               '@': path.resolve(__dirname, './src')
+             }
            }
          });
          ```
 
-      7. Integration Steps:
+      4. File Extensions:
+         - Use `.tsx` for TypeScript React components
+         - Use `.jsx` for JavaScript React components
+         - Never use `.js` for files containing JSX syntax
+         - When copying shared theme files, ensure they use `.jsx` extension if they contain JSX
+
+      5. Import Paths:
+         - Use relative paths from the current file location
+         - For shared theme components, use `./shared-theme/` instead of `../shared-theme/`
+         - Use the `@` alias for imports from the src directory
+
+      6. Integration Steps:
          1. Create new directory in integrations/
          2. Copy template files to src/components/
          3. Copy shared theme files to src/shared-theme/
-         4. Create App.tsx with color mode state
-         5. Set up TypeScript and Vite configs
-         6. Install dependencies
-         7. Test the integration
+         4. Rename any `.js` files containing JSX to `.jsx`
+         5. Update import paths to use correct relative paths
+         6. Create App.tsx with color mode state
+         7. Set up TypeScript and Vite configs
+         8. Install dependencies
+         9. Test the integration
 
-      8. Testing:
+      7. Testing:
          - Run `npm run dev` to start development server
          - Test color mode toggle
          - Verify all components render
@@ -155,36 +110,26 @@ actions:
          - Test hot reloading
          - Verify TypeScript compilation
 
-      9. Important Notes:
+      8. Important Notes:
          - Keep dependencies up to date
          - Follow TypeScript best practices
          - Maintain consistent file structure
          - Test thoroughly before committing
          - Document any special requirements
          - Keep shared theme files unchanged
+         - Always use correct file extensions for JSX files
+         - Use proper relative paths for imports
 
 examples:
   - input: |
-      # Bad: Missing required files
-      vite-mui-template/
-      ├── src/
-      │   └── App.tsx
-      └── package.json
+      # Bad: Using .js for JSX files
+      src/shared-theme/AppTheme.js
+      src/shared-theme/ColorModeIconDropdown.js
 
-      # Good: Complete integration structure
-      vite-mui-template/
-      ├── src/
-      │   ├── components/
-      │   ├── shared-theme/
-      │   ├── App.tsx
-      │   ├── main.tsx
-      │   └── index.css
-      ├── index.html
-      ├── package.json
-      ├── tsconfig.json
-      ├── tsconfig.node.json
-      └── vite.config.ts
-    output: "Follow the complete integration structure with all required files"
+      # Good: Using .jsx for JSX files
+      src/shared-theme/AppTheme.jsx
+      src/shared-theme/ColorModeIconDropdown.jsx
+    output: "Use .jsx extension for files containing JSX syntax"
 
 metadata:
   priority: high
