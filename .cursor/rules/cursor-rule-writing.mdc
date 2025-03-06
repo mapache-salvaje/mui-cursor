@@ -1,6 +1,6 @@
 ---
 description: Standards for writing Cursor rules
-globs: ["*.mdc"]
+globs: ["*"]
 alwaysApply: true
 ---
 
@@ -31,18 +31,25 @@ actions:
     message: |
       When writing Cursor rules:
 
-      1. File Structure:
-         ```
-         .cursor/rules/
-         ├── rule-name.mdc
-         ```
-
-      2. Rule File Structure:
+      1. Frontmatter (REQUIRED):
          ```markdown
          ---
          description: Clear description of the rule's purpose
-         globs: ["file patterns to match"]
-         alwaysApply: true/false
+         globs: ["*"]
+         alwaysApply: true
+         ---
+         ```
+         - MUST be the first content in the file
+         - MUST include all three fields exactly as shown
+         - MUST use ["*"] for globs unless specifically required otherwise
+         - MUST be included when proposing ANY new rule content
+         - MUST be separated by single line breaks
+         - MUST NOT contain extra spaces after dashes
+
+      2. Rule Structure:
+         ```markdown
+         ---
+         [frontmatter]
          ---
 
          # Rule Name
@@ -77,6 +84,7 @@ actions:
          - Document all conditions and actions
          - Use consistent naming conventions
          - Keep rules focused and single-purpose
+         - NEVER omit frontmatter when proposing rule content
 
       4. Rule Types:
          - File extension rules
@@ -107,7 +115,7 @@ actions:
 
       8. Important Notes:
          - NEVER write directly to .mdc files
-         - Always provide rule content for manual review
+         - ALWAYS include frontmatter in rule proposals
          - Follow established patterns
          - Keep rules simple and focused
          - Document all assumptions
@@ -126,14 +134,28 @@ actions:
 
 examples:
   - input: |
-      # Bad: Writing directly to .mdc file
-      Attempting to edit .mdc file directly
+      # Bad: Missing or incomplete frontmatter
+      # Rule Name
+      <rule>
+      name: my-rule
+      </rule>
 
-      # Good: Providing content for manual review
-      Providing content for user to copy and paste
-    output: "Never write directly to .mdc files"
+      # Bad: Extra spaces in frontmatter
+      ---  
+      description: My rule
+      globs: ["*"]
+      alwaysApply: true
+      ---  
+
+      # Good: Complete and properly formatted
+      ---
+      description: My rule
+      globs: ["*"]
+      alwaysApply: true
+      ---
+    output: "Always include properly formatted frontmatter"
 
 metadata:
-  priority: high
-  version: 1.0
+  priority: critical
+  version: 2.0
 </rule>

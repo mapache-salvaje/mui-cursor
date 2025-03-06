@@ -23,13 +23,9 @@ actions:
   - type: reject
     conditions:
       - pattern: "^(?!---\\s*\\n)"
-        message: "Rule files must start with frontmatter (---)"
-      - pattern: "^(?!---\\s*\\ndescription:)"
-        message: "Rule files must have a description in frontmatter"
-      - pattern: "^(?!---\\s*\\ndescription:.*\\nglobs:)"
-        message: "Rule files must have globs defined in frontmatter"
+        message: "Rule files must start with frontmatter"
       - pattern: "^(?!---\\s*\\ndescription:.*\\nglobs:.*\\nalwaysApply:)"
-        message: "Rule files must have alwaysApply defined in frontmatter"
+        message: "Frontmatter must contain description, globs, and alwaysApply in order"
       - pattern: "^---\\s*\\n---\\s*\\n---"
         message: "Rule file contains duplicate frontmatter sections"
       - pattern: "^---\\s*\\n\\s*\\n---"
@@ -46,31 +42,26 @@ actions:
       Cursor rule files must follow this exact format:
 
       1. Frontmatter (REQUIRED):
-         ```yaml
+         ```markdown
          ---
          description: Clear description of the rule's purpose
-         globs: ["*"]  # Use simple glob unless specifically required otherwise
+         globs: ["*"]
          alwaysApply: true
          ---
          ```
-         - MUST be the first thing in the file
-         - MUST contain description, globs, and alwaysApply
-         - No spaces after the dashes
-         - Single line break after opening dash
-         - Single line break before closing dash
-         - Keep globs simple unless complex patterns are required
+         - MUST be the first content in ANY rule file or proposal
+         - MUST contain exactly these three fields
+         - MUST use ["*"] for globs unless specifically required otherwise
+         - MUST NOT have extra spaces after dashes
+         - MUST be separated by single line breaks
+         - MUST be followed by a single blank line
 
-      2. Title and Description:
+      2. Rule Content Structure:
          ```markdown
          # Rule Name
-         Brief description of what the rule does
-         ```
-         - Single line break after frontmatter
-         - Single line break after title
-         - Single line break after description
 
-      3. Rule Definition:
-         ```yaml
+         Brief description of what the rule does.
+
          <rule>
          name: rule-name
          description: Detailed description
@@ -90,14 +81,18 @@ actions:
            version: "1.0"
          </rule>
          ```
-         - Single line break before rule block
-         - No extra spaces in YAML indentation
-         - All sections must be present
-         - No trailing spaces
+
+      3. Formatting Requirements:
+         - No tabs, use spaces for indentation
+         - No more than two consecutive blank lines
+         - Consistent indentation in YAML sections
+         - Clear separation between sections
+         - Proper markdown heading hierarchy
+         - Consistent code block formatting
 
 examples:
   - input: |
-      # Bad: Missing frontmatter
+      # Bad: No frontmatter
       # My Rule
       <rule>
       name: my-rule
@@ -108,22 +103,22 @@ examples:
       description: My rule
       ---
 
-      # Bad: Complex glob pattern
-      ---
+      # Bad: Extra spaces
+      ---  
       description: My rule
-      globs: ["*.ts", "*.tsx", "src/**/*.js"]
-      alwaysApply: false
-      ---
+      globs: ["*"]
+      alwaysApply: true
+      ---  
 
-      # Good: Complete frontmatter with simple glob
+      # Good: Complete and properly formatted
       ---
       description: My rule
       globs: ["*"]
       alwaysApply: true
       ---
-    output: "Rule files must have complete frontmatter with all required fields and simple glob pattern"
+    output: "Rule files must have complete and properly formatted frontmatter"
 
 metadata:
-  priority: high
-  version: 1.0
+  priority: critical
+  version: 2.0
 </rule>
