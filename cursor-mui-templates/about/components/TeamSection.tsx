@@ -100,21 +100,75 @@ export default function TeamSection() {
                   height: '100%',
                   display: 'flex',
                   flexDirection: 'column',
-                  transition: 'transform 0.2s ease-in-out',
+                  transition: 'all 0.3s ease-in-out',
+                  position: 'relative',
+                  overflow: 'hidden',
                   '&:hover': {
                     transform: 'translateY(-8px)',
+                    boxShadow: (theme) =>
+                      `0 12px 24px ${alpha(theme.palette.primary.main, 0.1)}`,
+                    '& .MuiCardMedia-root': {
+                      transform: 'scale(1.05)',
+                    },
+                    '& .social-icons': {
+                      opacity: 1,
+                      transform: 'translateY(0)',
+                    },
                   },
                 }}
               >
-                <CardMedia
-                  component="img"
-                  height="300"
-                  image={member.image}
-                  alt={member.name}
+                <Box
                   sx={{
-                    objectFit: 'cover',
+                    position: 'relative',
+                    overflow: 'hidden',
                   }}
-                />
+                >
+                  <CardMedia
+                    component="img"
+                    height="300"
+                    image={member.image}
+                    alt={member.name}
+                    sx={{
+                      objectFit: 'cover',
+                      transition: 'transform 0.3s ease-in-out',
+                    }}
+                  />
+                  <Box
+                    className="social-icons"
+                    sx={{
+                      position: 'absolute',
+                      bottom: 0,
+                      left: 0,
+                      right: 0,
+                      display: 'flex',
+                      justifyContent: 'center',
+                      gap: 2,
+                      p: 2,
+                      backgroundColor: (theme) =>
+                        alpha(theme.palette.background.paper, 0.9),
+                      opacity: 0,
+                      transform: 'translateY(20px)',
+                      transition: 'all 0.3s ease-in-out',
+                    }}
+                  >
+                    <a
+                      href={member.social.linkedin}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{ color: 'inherit' }}
+                    >
+                      <LinkedInIcon sx={{ transition: 'color 0.3s ease-in-out', '&:hover': { color: 'primary.main' } }} />
+                    </a>
+                    <a
+                      href={member.social.twitter}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{ color: 'inherit' }}
+                    >
+                      <TwitterIcon sx={{ transition: 'color 0.3s ease-in-out', '&:hover': { color: 'primary.main' } }} />
+                    </a>
+                  </Box>
+                </Box>
                 <CardContent
                   sx={{
                     display: 'flex',
@@ -122,6 +176,7 @@ export default function TeamSection() {
                     alignItems: 'center',
                     textAlign: 'center',
                     p: 3,
+                    flexGrow: 1,
                   }}
                 >
                   <Typography
@@ -140,6 +195,7 @@ export default function TeamSection() {
                     sx={{
                       color: 'primary.main',
                       mb: 2,
+                      fontWeight: 500,
                     }}
                   >
                     {member.role}
@@ -154,29 +210,6 @@ export default function TeamSection() {
                   >
                     {member.bio}
                   </Typography>
-                  <Box
-                    sx={{
-                      display: 'flex',
-                      gap: 2,
-                    }}
-                  >
-                    <a
-                      href={member.social.linkedin}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      style={{ color: 'inherit' }}
-                    >
-                      <LinkedInIcon />
-                    </a>
-                    <a
-                      href={member.social.twitter}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      style={{ color: 'inherit' }}
-                    >
-                      <TwitterIcon />
-                    </a>
-                  </Box>
                 </CardContent>
               </Card>
             </Grid>

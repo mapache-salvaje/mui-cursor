@@ -28,6 +28,19 @@ export default function Hero() {
         pt: { xs: 20, sm: 24 },
         pb: { xs: 8, sm: 12 },
         px: { xs: 2, sm: 0 },
+        position: 'relative',
+        '&::before': {
+          content: '""',
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          background: theme.palette.mode === 'light'
+            ? `radial-gradient(circle at 50% 50%, ${alpha(theme.palette.primary.main, 0.1)} 0%, transparent 50%)`
+            : `radial-gradient(circle at 50% 50%, ${alpha(theme.palette.primary.main, 0.2)} 0%, transparent 50%)`,
+          zIndex: 0,
+        },
       })}
     >
       <Container
@@ -36,6 +49,8 @@ export default function Hero() {
           flexDirection: 'column',
           alignItems: 'center',
           gap: { xs: 3, sm: 6 },
+          position: 'relative',
+          zIndex: 1,
         }}
       >
         <Box
@@ -45,6 +60,8 @@ export default function Hero() {
             alignItems: 'center',
             gap: 2,
             textAlign: 'center',
+            maxWidth: 800,
+            mx: 'auto',
           }}
         >
           <Typography
@@ -55,6 +72,16 @@ export default function Hero() {
               alignSelf: 'center',
               textAlign: 'center',
               fontSize: 'clamp(3.5rem, 10vw, 4rem)',
+              fontWeight: 700,
+              lineHeight: 1.2,
+              mb: 2,
+              background: theme.palette.mode === 'light'
+                ? `linear-gradient(45deg, ${theme.palette.primary.main}, ${theme.palette.primary.dark})`
+                : `linear-gradient(45deg, ${theme.palette.primary.light}, ${theme.palette.primary.main})`,
+              backgroundClip: 'text',
+              textFillColor: 'transparent',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
             }}
           >
             About Our Company
@@ -62,7 +89,12 @@ export default function Hero() {
           <Typography
             textAlign="center"
             color="text.secondary"
-            sx={{ maxWidth: 600, fontSize: 'clamp(1rem, 2vw, 1.25rem)' }}
+            sx={{
+              maxWidth: 600,
+              fontSize: 'clamp(1rem, 2vw, 1.25rem)',
+              lineHeight: 1.8,
+              mb: 4,
+            }}
           >
             We are a team of passionate individuals dedicated to creating innovative solutions
             that make a difference in people's lives. Our journey began with a simple idea

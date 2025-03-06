@@ -83,6 +83,18 @@ export default function History() {
                 maxWidth: 500,
                 height: 'auto',
                 display: { xs: 'none', md: 'block' },
+                animation: 'float 6s ease-in-out infinite',
+                '@keyframes float': {
+                  '0%': {
+                    transform: 'translateY(0px)',
+                  },
+                  '50%': {
+                    transform: 'translateY(-20px)',
+                  },
+                  '100%': {
+                    transform: 'translateY(0px)',
+                  },
+                },
               }}
             />
           </Grid>
@@ -94,6 +106,10 @@ export default function History() {
                   sx={{
                     position: 'relative',
                     pl: 4,
+                    transition: 'transform 0.3s ease-in-out',
+                    '&:hover': {
+                      transform: 'translateX(8px)',
+                    },
                     '&::before': {
                       content: '""',
                       position: 'absolute',
@@ -102,6 +118,25 @@ export default function History() {
                       bottom: 0,
                       width: 2,
                       backgroundColor: 'primary.main',
+                      transition: 'all 0.3s ease-in-out',
+                    },
+                    '&::after': {
+                      content: '""',
+                      position: 'absolute',
+                      left: -4,
+                      top: 8,
+                      width: 10,
+                      height: 10,
+                      borderRadius: '50%',
+                      backgroundColor: 'primary.main',
+                      transition: 'all 0.3s ease-in-out',
+                    },
+                    '&:hover::before': {
+                      backgroundColor: 'primary.dark',
+                    },
+                    '&:hover::after': {
+                      backgroundColor: 'primary.dark',
+                      transform: 'scale(1.2)',
                     },
                   }}
                 >
@@ -111,6 +146,10 @@ export default function History() {
                       color: 'primary.main',
                       fontWeight: 'bold',
                       mb: 1,
+                      transition: 'color 0.3s ease-in-out',
+                      '&:hover': {
+                        color: 'primary.dark',
+                      },
                     }}
                   >
                     {item.year}
