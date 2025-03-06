@@ -1,0 +1,44 @@
+---
+description: Rule for reusing existing code instead of creating from scratch
+globs: ["*.tsx", "*.ts"]
+alwaysApply: true
+---
+
+# Reuse Existing Code
+
+Rule for ensuring we reuse existing code instead of creating new files from scratch.
+
+<rule>
+name: reuse-existing-code
+description: Ensure we reuse existing code instead of creating from scratch
+filters:
+  - type: file_extension
+    pattern: "\\.(ts|tsx)$"
+  - type: event
+    pattern: "file_create"
+actions:
+  - type: suggest
+    message: |
+      When creating new integrations or templates:
+
+      1. First check if there are existing files that can be duplicated
+      2. Only create new files from scratch if no suitable existing files are found
+      3. When duplicating files:
+         - Maintain the same structure and patterns
+         - Update only the necessary parts (like imports, paths, etc.)
+         - Keep the core functionality intact
+      4. Document any modifications made to the duplicated files
+
+examples:
+  - input: |
+      # Bad: Creating from scratch
+      Creating new files without checking existing ones
+
+      # Good: Reusing existing code
+      Duplicating and modifying existing files
+    output: "Always check for existing files to duplicate before creating new ones"
+
+metadata:
+  priority: high
+  version: 1.0
+</rule>
