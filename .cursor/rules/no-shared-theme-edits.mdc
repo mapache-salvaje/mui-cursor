@@ -1,0 +1,26 @@
+ ---
+description: Rule to prevent editing shared theme files
+globs: ["**/shared-theme/**"]
+alwaysApply: true
+---
+
+# No Shared Theme Edits
+
+Rule to prevent any modifications to shared theme files.
+
+<rule>
+name: no-shared-theme-edits
+description: Prevent any modifications to files in shared-theme directories
+filters:
+  - type: file_path
+    pattern: ".*/shared-theme/.*"
+actions:
+  - type: reject
+    message: "Editing shared theme files is not allowed. These files should be treated as immutable."
+examples:
+  - input: "src/shared-theme/AppTheme.tsx"
+    output: "Rejected: Cannot modify shared theme files"
+metadata:
+  priority: high
+  version: 1.0
+</rule>
