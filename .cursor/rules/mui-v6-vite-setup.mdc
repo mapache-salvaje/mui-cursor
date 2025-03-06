@@ -1,15 +1,15 @@
 ---
-description: Standards for setting up a React project with Material UI v6
-globs: ["package.json", "src/**/*.{ts,tsx}", "tsconfig*.json"]
+description: Standards for setting up a React project with Material UI v6 and Vite
+globs: ["package.json", "src/**/*.{ts,tsx}", "tsconfig*.json", "vite.config.ts"]
 alwaysApply: true
 ---
-# MUI v6 Project Setup Standards
+# MUI v6 + Vite Project Setup Standards
 
 Standards for setting up a React project with Material UI v6, TypeScript, and Vite.
 
 <rule>
-name: mui-v6-setup
-description: Standards for setting up a React project with Material UI v6
+name: mui-v6-vite-setup
+description: Standards for setting up a React project with Material UI v6 and Vite
 filters:
   - type: file_extension
     pattern: "\\.(ts|tsx|json)$"
@@ -19,7 +19,7 @@ filters:
 actions:
   - type: suggest
     message: |
-      When setting up a new MUI v6 project:
+      When setting up a new MUI v6 project with Vite:
 
       1. Core Dependencies:
          ```json
@@ -227,6 +227,8 @@ actions:
          - Keep the project structure clean and organized
          - Use proper TypeScript configuration with project references
          - Ensure path aliases are configured in both TypeScript and Vite configs
+         - Follow Vite's recommended project structure
+         - Use environment variables with the VITE_ prefix
 
 examples:
   - input: |

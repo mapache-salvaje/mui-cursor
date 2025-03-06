@@ -1,6 +1,6 @@
 ---
-description: Cursor Rules Location
-globs: [*.mdc]
+description: Standards for placing and organizing Cursor rule files in the repository
+globs: ["*.mdc"]
 alwaysApply: true
 ---
 # Cursor Rules Location
@@ -11,13 +11,10 @@ Rules for placing and organizing Cursor rule files in the repository.
 name: cursor-rules-location
 description: Standards for placing Cursor rule files in the correct directory
 filters:
-  # Match any .mdc files
   - type: file_extension
     pattern: "\\.mdc$"
-  # Match files that look like Cursor rules
   - type: content
     pattern: "(?s)<rule>.*?</rule>"
-  # Match file creation events
   - type: event
     pattern: "file_create"
 

@@ -25,10 +25,14 @@ actions:
         message: "Rule file contains duplicate frontmatter sections"
       - pattern: "^---\\s*\\n\\s*\\n---"
         message: "Rule file contains empty frontmatter section"
+      - pattern: "^---\\s+description:"
+        message: "Frontmatter should not have extra spaces after dashes"
+      - pattern: "\\n\\n\\n"
+        message: "File should not contain more than two consecutive line breaks"
 
   - type: suggest
     message: |
-      Cursor rule files should follow this format:
+      Cursor rule files must follow this exact format:
 
       1. Frontmatter (required):
          ```yaml
@@ -38,12 +42,19 @@ actions:
          alwaysApply: false
          ---
          ```
+         - No spaces after the dashes
+         - Single line break after opening dash
+         - Single line break before closing dash
+         - All fields must be present
 
       2. Title and Description:
          ```markdown
          # Rule Name
          Brief description of what the rule does
          ```
+         - Single line break after frontmatter
+         - Single line break after title
+         - Single line break after description
 
       3. Rule Definition:
          ```yaml
@@ -66,22 +77,19 @@ actions:
            version: "1.0"
          </rule>
          ```
+         - Single line break before rule block
+         - No extra spaces in YAML indentation
+         - All sections must be present
+         - No trailing spaces
+
+      4. File Structure:
+         - No extra spaces at line ends
+         - No tabs, only spaces for indentation
+         - UTF-8 encoding
+         - Unix-style line endings (LF)
+         - No BOM marker
 
 examples:
-  - input: |
-      ---
-      description: 
-      globs: 
-      alwaysApply: false
-      ---
-      ---
-      description: My rule
-      globs: ["*.ts"]
-      alwaysApply: false
-      ---
-      # My Rule
-    output: "Rejected: Contains duplicate frontmatter sections"
-
   - input: |
       ---
       description: My rule
@@ -100,6 +108,25 @@ examples:
           message: "Good example"
       </rule>
     output: "Accepted: Properly formatted rule file"
+
+  - input: |
+      --- 
+      description: My rule
+      globs: ["*.ts"]
+      alwaysApply: false
+      ---
+      # My Rule
+      <rule>
+      name: my-rule
+      description: A well-formatted rule
+      filters:
+        - type: file_extension
+          pattern: "\\.ts$"
+      actions:
+        - type: suggest
+          message: "Good example"
+      </rule>
+    output: "Rejected: Extra space after frontmatter dash"
 
 metadata:
   priority: high
