@@ -1,0 +1,162 @@
+---
+description: Standards for assembling Material UI applications with Next.js
+globs: ["*"]
+alwaysApply: true
+---
+
+# MUI Next.js Assembly Standards
+
+Standards for assembling Material UI applications with Next.js, ensuring proper setup and latest versions.
+
+<rule>
+name: mui-nextjs-assembly
+description: Standards for assembling Material UI applications with Next.js
+filters:
+  - type: file_extension
+    pattern: "\\.(ts|tsx|js|jsx|json)$"
+  - type: event
+    pattern: "file_create|file_modify"
+
+actions:
+  - type: enforce
+    message: |
+      When assembling a Material UI application with Next.js:
+
+      1. Dependencies Structure:
+         ```json
+         {
+           "dependencies": {
+             "@emotion/react": "^11.11.3",
+             "@emotion/styled": "^11.11.0",
+             "@mui/icons-material": "^6.4.7",
+             "@mui/material": "^6.4.7",
+             "@mui/material-nextjs": "^6.0.0-alpha.4",
+             "next": "15.2.0",
+             "react": "19.0.0",
+             "react-dom": "19.0.0"
+           },
+           "devDependencies": {
+             "@types/node": "^20.11.19",
+             "@types/react": "19.0.0",
+             "@types/react-dom": "19.0.0",
+             "eslint": "^8.56.0",
+             "eslint-config-next": "15.2.0",
+             "typescript": "^5.3.3"
+           }
+         }
+         ```
+
+      2. Project Structure:
+         ```
+         src/
+         ├── app/
+         │   ├── layout.tsx           # Root layout with metadata
+         │   ├── page.tsx             # Main page component
+         │   └── root-client-layout.tsx # Client-side root with theme setup
+         ├── components/              # Template-specific components
+         │   ├── NavigationBar.tsx    # Navigation component
+         │   ├── Footer.tsx          # Footer component
+         │   └── [Feature].tsx       # Feature-specific components
+         └── shared-theme/           # DO NOT MODIFY these files
+             ├── AppTheme.tsx        # Theme provider setup
+             ├── ColorModeIconDropdown.tsx
+             └── customizations/     # Theme customizations
+
+      3. Root Layout Setup (layout.tsx):
+         ```tsx
+         import type { Metadata } from 'next';
+         import { RootClientLayout } from './root-client-layout';
+
+         export const metadata: Metadata = {
+           title: 'Your App Name',
+           description: 'Your app description',
+         };
+
+         export default function RootLayout({
+           children,
+         }: {
+           children: React.ReactNode;
+         }) {
+           return <RootClientLayout>{children}</RootClientLayout>;
+         }
+         ```
+
+      4. Client Root Layout Setup (root-client-layout.tsx):
+         ```tsx
+         'use client';
+         
+         import * as React from 'react';
+         import { AppRouterCacheProvider } from '@mui/material-nextjs/v14-appRouter';
+         import CssBaseline from '@mui/material/CssBaseline';
+         import AppTheme from '../shared-theme/AppTheme';
+
+         export function RootClientLayout({ children }: { children: React.ReactNode }) {
+           const [mode, setMode] = React.useState<'light' | 'dark'>('light');
+
+           return (
+             <html lang="en">
+               <body>
+                 <AppRouterCacheProvider options={{ enableCssLayer: true }}>
+                   <AppTheme mode={mode}>
+                     <CssBaseline enableColorScheme />
+                     {children}
+                   </AppTheme>
+                 </AppRouterCacheProvider>
+               </body>
+             </html>
+           );
+         }
+         ```
+
+      5. Component Guidelines:
+         - Use 'use client' directive for client components
+         - Keep shared theme components untouched
+         - Follow MUI v6 styling patterns
+         - Use proper TypeScript types
+         - Implement responsive designs
+         - Use theme variables for consistency
+
+      6. Theme Integration:
+         - Use AppTheme for consistent theming
+         - Never modify shared theme files
+         - Use theme.palette for colors
+         - Use theme.spacing for layout
+         - Use theme.breakpoints for responsiveness
+
+      7. Template Integration:
+         - Copy template components to src/components
+         - Maintain component hierarchy
+         - Keep shared components synchronized
+         - Update paths and imports
+         - Preserve styling patterns
+         - Test responsive behavior
+
+      8. Performance Guidelines:
+         - Enable CSS layer optimization
+         - Use proper image optimization
+         - Implement code splitting
+         - Use proper caching strategies
+         - Monitor bundle size
+         - Test performance metrics
+
+      9. Testing Steps:
+         - Verify theme switching
+         - Test responsive layouts
+         - Check component hydration
+         - Validate accessibility
+         - Test navigation
+         - Monitor performance
+
+examples:
+  - input: |
+      # Bad: Modifying shared theme
+      src/shared-theme/AppTheme.tsx modifications
+
+      # Good: Template-specific customization
+      src/components/CustomHero.tsx with theme usage
+    output: "Keep shared theme intact, customize in components"
+
+metadata:
+  priority: critical
+  version: 1.0
+</rule>
