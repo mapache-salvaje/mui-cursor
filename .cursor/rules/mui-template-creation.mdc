@@ -27,13 +27,63 @@ actions:
          cursor-mui-templates/
          ├── template-name/
          │   ├── components/     # Template-specific components
+         │   │   ├── SitemarkIcon.tsx  # Logo component (REQUIRED)
+         │   │   ├── NavigationBar.tsx # Navigation component (REQUIRED)
+         │   │   └── Footer.tsx        # Footer component (REQUIRED)
          │   ├── shared-theme/   # Shared theme components (do not modify)
          │   ├── README.md       # Template documentation
          │   ├── Template.tsx    # TypeScript version
          │   └── Template.js     # JavaScript version
          ```
 
-      2. Component Design Principles:
+      2. Required Components:
+         
+         a. SitemarkIcon (Logo):
+         ```tsx
+         export default function SitemarkIcon() {
+           return (
+             <SvgIcon sx={{ height: 21, width: 100, mr: 2 }}>
+               {/* SVG content */}
+             </SvgIcon>
+           );
+         }
+         ```
+
+         b. NavigationBar:
+         ```tsx
+         const StyledToolbar = styled(Toolbar)(({ theme }) => ({
+           display: 'flex',
+           alignItems: 'center',
+           justifyContent: 'space-between',
+           flexShrink: 0,
+           borderRadius: `calc(${theme.shape.borderRadius}px + 8px)`,
+           backdropFilter: 'blur(24px)',
+           backgroundColor: alpha(theme.palette.background.default, 0.4),
+           boxShadow: theme.shadows[1],
+           padding: '8px 12px',
+         }));
+
+         export default function NavigationBar({ onToggleColorMode }: NavigationBarProps) {
+           return (
+             <AppBar
+               position="fixed"
+               enableColorOnDark
+               sx={{
+                 boxShadow: 0,
+                 bgcolor: 'transparent',
+                 backgroundImage: 'none',
+                 mt: 'calc(var(--template-frame-height, 0px) + 28px)',
+                 border: 0,
+                 borderBottom: 0,
+               }}
+             >
+               {/* Navigation content */}
+             </AppBar>
+           );
+         }
+         ```
+
+      3. Component Design Principles:
          ```tsx
          // Base component structure with animations and theme integration
          import * as React from 'react';
@@ -143,7 +193,15 @@ actions:
          animation: 'float 6s ease-in-out infinite',
          ```
 
-      3. Component Guidelines:
+      4. Navigation Guidelines:
+         - Use floating header with blur effect
+         - Implement SitemarkIcon for logo
+         - Include color mode toggle
+         - Support mobile responsive menu
+         - Maintain consistent button spacing
+         - Use theme-aware transparency
+
+      5. Component Guidelines:
          - All interactive elements should have hover states
          - Use consistent animation timing (0.3s ease-in-out)
          - Implement theme-aware gradients and colors
@@ -152,14 +210,14 @@ actions:
          - Use responsive spacing and typography
          - Maintain dark mode compatibility
 
-      4. Theme Integration:
+      6. Theme Integration:
          - Use theme.palette.mode for light/dark variants
          - Use alpha utility for transparent colors
          - Use theme.palette colors for gradients
          - Follow MUI's spacing scale
          - Use theme breakpoints for responsiveness
 
-      5. Testing:
+      7. Testing:
          - Test animations in both light and dark modes
          - Verify responsive design
          - Check accessibility
@@ -203,5 +261,5 @@ examples:
 
 metadata:
   priority: high
-  version: 1.0
+  version: 2.0
 </rule>

@@ -1,0 +1,175 @@
+---
+description: Standards for efficiently duplicating and customizing MUI templates while maintaining shared components
+globs: ["*"]
+alwaysApply: true
+---
+
+# MUI Template Duplication Standards
+
+Standards for efficiently duplicating and customizing MUI templates while maintaining shared components.
+
+<rule>
+name: mui-template-duplication
+description: Standards for duplicating and customizing MUI templates
+filters:
+  - type: file_extension
+    pattern: "\\.(ts|tsx)$"
+  - type: event
+    pattern: "file_create|file_modify"
+
+actions:
+  - type: enforce
+    message: |
+      When duplicating an MUI template:
+
+      1. Directory Structure:
+         ```
+         integrations/
+         ├── cursor-mui-vite-[template-name]/
+         │   ├── src/
+         │   │   ├── components/        # Template-specific components
+         │   │   │   ├── SitemarkIcon.tsx  # Logo component (REQUIRED)
+         │   │   │   ├── NavigationBar.tsx # Navigation component (REQUIRED)
+         │   │   │   └── Footer.tsx        # Footer component (REQUIRED)
+         │   │   ├── shared-theme/      # DO NOT MODIFY these files
+         │   │   ├── App.tsx           # Entry point with theme setup
+         │   │   ├── [Template].tsx    # Main template component
+         │   │   └── main.tsx          # React entry point
+         │   ├── index.html
+         │   ├── package.json
+         │   └── vite.config.ts
+         ```
+
+      2. Duplication Steps:
+         1. Copy entire template directory:
+            ```bash
+            cp -r cursor-mui-vite-[source] cursor-mui-vite-[target]
+            ```
+         2. Update package.json name
+         3. Install dependencies
+         4. Rename main component file (e.g., About.tsx → Pricing.tsx)
+         5. Copy required shared components (NavigationBar, Footer) from source
+         6. NEVER modify shared-theme directory
+         7. Verify SitemarkIcon implementation matches source
+         8. Ensure NavigationBar styling is identical
+         9. Check Footer component for consistency
+
+      3. Required Component Synchronization:
+         - SitemarkIcon must be identical across all templates
+         - NavigationBar structure must match (only menu items differ)
+         - Footer structure must be consistent
+         - Color mode toggle implementation must be uniform
+         - Toolbar styling must be identical
+         - Header blur and transparency effects must match
+
+      4. Component Guidelines:
+         - Create new components in src/components/
+         - Maintain consistent naming ([Template]Hero, [Template]Content)
+         - Keep shared components identical across templates
+         - Pass color mode toggle through components
+         - Maintain responsive design patterns
+         - Follow MUI v6 best practices
+
+      5. Navigation Requirements:
+         ```tsx
+         // Required NavigationBar structure
+         const StyledToolbar = styled(Toolbar)(({ theme }) => ({
+           display: 'flex',
+           alignItems: 'center',
+           justifyContent: 'space-between',
+           flexShrink: 0,
+           borderRadius: `calc(${theme.shape.borderRadius}px + 8px)`,
+           backdropFilter: 'blur(24px)',
+           backgroundColor: alpha(theme.palette.background.default, 0.4),
+           boxShadow: theme.shadows[1],
+           padding: '8px 12px',
+         }));
+
+         // Required AppBar configuration
+         <AppBar
+           position="fixed"
+           enableColorOnDark
+           sx={{
+             boxShadow: 0,
+             bgcolor: 'transparent',
+             backgroundImage: 'none',
+             mt: 'calc(var(--template-frame-height, 0px) + 28px)',
+             border: 0,
+             borderBottom: 0,
+           }}
+         >
+         ```
+
+      6. App.tsx Structure:
+         ```tsx
+         function App() {
+           const [mode, setMode] = useState<'light' | 'dark'>('light');
+           const toggleColorMode = useCallback(() => {
+             setMode((prev) => (prev === 'light' ? 'dark' : 'light'));
+           }, []);
+
+           return (
+             <AppTheme mode={mode}>
+               <CssBaseline enableColorScheme />
+               <Template onToggleColorMode={toggleColorMode} />
+             </AppTheme>
+           );
+         }
+         ```
+
+      7. Template Component Structure:
+         ```tsx
+         interface TemplateProps {
+           onToggleColorMode: () => void;
+         }
+
+         export default function Template({ onToggleColorMode }: TemplateProps) {
+           return (
+             <Box>
+               <NavigationBar onToggleColorMode={onToggleColorMode} />
+               <TemplateSpecificComponents />
+               <Footer />
+             </Box>
+           );
+         }
+         ```
+
+      8. Testing Steps:
+         1. Install dependencies
+         2. Start dev server
+         3. Verify navigation works
+         4. Test color mode toggle
+         5. Check responsive design
+         6. Validate shared components
+         7. Compare header styling with source
+         8. Verify logo implementation
+         9. Test mobile menu behavior
+         10. Check footer consistency
+
+      9. Important Notes:
+         - Keep shared components in sync across templates
+         - Maintain consistent styling patterns
+         - Preserve theme integration
+         - Follow component hierarchy
+         - Use proper TypeScript types
+         - Keep animations consistent
+         - Never modify shared-theme files
+         - Always duplicate NavigationBar styling exactly
+         - Maintain identical header blur effects
+         - Keep logo implementation consistent
+
+examples:
+  - input: |
+      # Bad: Modifying shared theme or using different styling
+      cursor-mui-vite-pricing/src/shared-theme/theme.ts
+      cursor-mui-vite-pricing/src/components/NavigationBar.tsx with different styles
+
+      # Good: Maintaining consistent components
+      cursor-mui-vite-pricing/src/components/PricingHero.tsx
+      cursor-mui-vite-pricing/src/components/NavigationBar.tsx matching source
+    output: "Create template-specific components while maintaining shared component consistency"
+
+metadata:
+  priority: high
+  version: 2.0
+</rule>

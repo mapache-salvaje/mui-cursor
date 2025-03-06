@@ -1,0 +1,56 @@
+---
+description: Rule to prevent automatic commits without explicit user approval
+globs: ["*"]
+alwaysApply: true
+---
+
+# No Automatic Commits
+
+Rule to prevent committing and pushing changes without explicit user approval.
+
+<rule>
+name: no-auto-commits
+description: Never commit or push changes without explicit user approval
+filters:
+  - type: command
+    pattern: "git (add|commit|push)"
+  - type: event
+    pattern: "file_modify|file_create|file_delete"
+
+actions:
+  - type: reject
+    conditions:
+      - pattern: "git (add|commit|push)"
+        message: "Automatic commits are not allowed. Wait for explicit user approval before committing changes."
+
+  - type: suggest
+    message: |
+      When making changes to the repository:
+
+      1. NEVER commit or push changes automatically
+      2. ALWAYS wait for explicit user approval:
+         - "Please commit these changes"
+         - "You can commit now"
+         - "Commit and push this"
+      3. When user approves:
+         - Show proposed commit message first
+         - Wait for user confirmation
+         - Only then proceed with commit/push
+      4. If unsure:
+         - Ask if user wants to commit
+         - Wait for explicit confirmation
+      5. Keep changes uncommitted by default
+
+examples:
+  - input: |
+      # Bad: Automatic commits
+      git add . && git commit -m "feat: add new component" && git push
+
+      # Good: Wait for approval
+      "Here are the changes I made. Would you like me to commit them?"
+    output: "Never commit without explicit user approval"
+
+metadata:
+  priority: critical
+  version: 1.0
+</rule>
