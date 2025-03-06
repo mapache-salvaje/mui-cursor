@@ -23,6 +23,8 @@ const StyledToolbar = styled(Toolbar)(({ theme }) => ({
   flexShrink: 0,
   borderRadius: `calc(${theme.shape.borderRadius}px + 8px)`,
   backdropFilter: 'blur(24px)',
+  border: '1px solid',
+  borderColor: theme.palette.divider,
   backgroundColor: alpha(theme.palette.background.default, 0.4),
   boxShadow: theme.shadows[1],
   padding: '8px 12px',
@@ -35,13 +37,6 @@ export default function NavigationBar() {
     setOpen(newOpen);
   };
 
-  const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-
   return (
     <AppBar
       position="fixed"
@@ -51,8 +46,6 @@ export default function NavigationBar() {
         bgcolor: 'transparent',
         backgroundImage: 'none',
         mt: 'calc(var(--template-frame-height, 0px) + 28px)',
-        border: 0,
-        borderBottom: 0,
       }}
     >
       <Container maxWidth="lg">
@@ -72,7 +65,7 @@ export default function NavigationBar() {
               <Button variant="text" color="info" size="small">
                 Team
               </Button>
-              <Button variant="text" color="info" size="small" sx={{ minWidth: 0 }}>
+              <Button variant="text" color="info" size="small">
                 Contact
               </Button>
             </Box>

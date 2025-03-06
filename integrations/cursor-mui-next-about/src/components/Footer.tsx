@@ -8,8 +8,8 @@ import Link from '@mui/material/Link';
 import Stack from '@mui/material/Stack';
 import IconButton from '@mui/material/IconButton';
 import Divider from '@mui/material/Divider';
-import FacebookIcon from '@mui/icons-material/Facebook';
-import TwitterIcon from '@mui/icons-material/Twitter';
+import FacebookIcon from '@mui/icons-material/GitHub';
+import TwitterIcon from '@mui/icons-material/X';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
@@ -18,13 +18,13 @@ import SitemarkIcon from './SitemarkIcon';
 
 function Copyright() {
   return (
-    <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
-      {'© '}
-      {new Date().getFullYear()}{' '}
-      <Link color="inherit" href="#">
-        Your Company Name
+    <Typography variant="body2" sx={{ color: 'text.secondary', mt: 1 }}>
+      {'Copyright © '}
+      <Link color="text.secondary" href="https://mui.com/">
+        Sitemark
       </Link>
-      {'. All rights reserved.'}
+      &nbsp;
+      {new Date().getFullYear()}
     </Typography>
   );
 }
@@ -60,9 +60,7 @@ export default function Footer() {
             }}
           >
             <Box sx={{ width: { xs: '100%', sm: '60%' } }}>
-              <Box sx={{ ml: '-15px' }}>
-                <SitemarkIcon />
-              </Box>
+              <SitemarkIcon />
               <Typography
                 variant="body2"
                 gutterBottom
@@ -113,19 +111,19 @@ export default function Footer() {
               Product
             </Typography>
             <Link color="text.secondary" variant="body2" href="#">
-              Mission
+              Features
             </Link>
             <Link color="text.secondary" variant="body2" href="#">
-              Values
+              Testimonials
             </Link>
             <Link color="text.secondary" variant="body2" href="#">
-              History
+              Highlights
             </Link>
             <Link color="text.secondary" variant="body2" href="#">
-              Team
+              Pricing
             </Link>
             <Link color="text.secondary" variant="body2" href="#">
-              Contact
+              FAQs
             </Link>
           </Box>
           <Box
