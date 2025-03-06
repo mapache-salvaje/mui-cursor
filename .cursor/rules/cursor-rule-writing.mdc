@@ -114,6 +114,16 @@ actions:
          - Consider edge cases
          - Test thoroughly
 
+      9. Creating Rules for Users:
+         - Create rule files in .cursor/rules/ directory
+         - Use proper file naming (kebab-case)
+         - Include complete frontmatter
+         - Follow the standard rule structure
+         - Provide clear examples
+         - Test the rule before committing
+         - Use conventional commits for rule changes
+         - NEVER commit changes until after user has reviewed and copied the content
+
 examples:
   - input: |
       # Bad: Writing directly to .mdc file

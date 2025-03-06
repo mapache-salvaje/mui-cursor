@@ -1,1 +1,28 @@
- 
+---
+description: Rule to prevent AI from modifying Cursor rule files
+globs: ["*.mdc"]
+alwaysApply: true
+---
+
+# No AI MDC File Edits
+
+Rule to prevent AI from modifying Cursor rule files.
+
+<rule>
+name: no-ai-mdc-edits
+description: Prevent AI from modifying .mdc files
+filters:
+  - type: file_extension
+    pattern: "\\.mdc$"
+  - type: event
+    pattern: "file_modify"
+actions:
+  - type: reject
+    message: "AI cannot modify .mdc files. These files can only be modified by the user."
+examples:
+  - input: "AI attempting to edit .mdc file"
+    output: "Rejected: AI cannot modify .mdc files"
+metadata:
+  priority: high
+  version: 1.0
+</rule>
