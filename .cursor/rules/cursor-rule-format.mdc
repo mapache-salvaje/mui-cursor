@@ -1,0 +1,107 @@
+---
+description: Standards for formatting Cursor rule files
+globs: ["*.mdc"]
+alwaysApply: true
+---
+# Cursor Rule Format
+
+Standards for formatting Cursor rule files to ensure consistency and proper functionality.
+
+<rule>
+name: cursor-rule-format
+description: Enforce proper formatting of Cursor rule files
+filters:
+  - type: file_extension
+    pattern: "\\.mdc$"
+  - type: content
+    pattern: "(?s)<rule>.*?</rule>"
+  - type: event
+    pattern: "file_create|file_modify"
+
+actions:
+  - type: reject
+    conditions:
+      - pattern: "^---\\s*\\n---\\s*\\n---"
+        message: "Rule file contains duplicate frontmatter sections"
+      - pattern: "^---\\s*\\n\\s*\\n---"
+        message: "Rule file contains empty frontmatter section"
+
+  - type: suggest
+    message: |
+      Cursor rule files should follow this format:
+
+      1. Frontmatter (required):
+         ```yaml
+         ---
+         description: Clear description of the rule's purpose
+         globs: ["file patterns to match"]
+         alwaysApply: false
+         ---
+         ```
+
+      2. Title and Description:
+         ```markdown
+         # Rule Name
+         Brief description of what the rule does
+         ```
+
+      3. Rule Definition:
+         ```yaml
+         <rule>
+         name: rule-name
+         description: Detailed description
+         filters:
+           - type: file_extension|content|event
+             pattern: "regex pattern"
+         actions:
+           - type: reject|suggest|execute
+             conditions:
+               - pattern: "regex pattern"
+             message: "Error message"
+         examples:
+           - input: "Example input"
+             output: "Expected output"
+         metadata:
+           priority: high|medium|low
+           version: "1.0"
+         </rule>
+         ```
+
+examples:
+  - input: |
+      ---
+      description: 
+      globs: 
+      alwaysApply: false
+      ---
+      ---
+      description: My rule
+      globs: ["*.ts"]
+      alwaysApply: false
+      ---
+      # My Rule
+    output: "Rejected: Contains duplicate frontmatter sections"
+
+  - input: |
+      ---
+      description: My rule
+      globs: ["*.ts"]
+      alwaysApply: false
+      ---
+      # My Rule
+      <rule>
+      name: my-rule
+      description: A well-formatted rule
+      filters:
+        - type: file_extension
+          pattern: "\\.ts$"
+      actions:
+        - type: suggest
+          message: "Good example"
+      </rule>
+    output: "Accepted: Properly formatted rule file"
+
+metadata:
+  priority: high
+  version: 1.0
+</rule>
