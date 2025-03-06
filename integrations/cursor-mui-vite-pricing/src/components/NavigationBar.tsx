@@ -21,27 +21,18 @@ const StyledToolbar = styled(Toolbar)(({ theme }) => ({
   flexShrink: 0,
   borderRadius: `calc(${theme.shape.borderRadius}px + 8px)`,
   backdropFilter: 'blur(24px)',
+  border: '1px solid',
+  borderColor: theme.palette.divider,
   backgroundColor: alpha(theme.palette.background.default, 0.4),
   boxShadow: theme.shadows[1],
   padding: '8px 12px',
 }));
 
-interface NavigationBarProps {
-  onToggleColorMode: () => void;
-}
-
-export default function NavigationBar({ onToggleColorMode }: NavigationBarProps) {
+export default function NavigationBar() {
   const [open, setOpen] = React.useState(false);
 
   const toggleDrawer = (newOpen: boolean) => () => {
     setOpen(newOpen);
-  };
-
-  const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
   };
 
   return (
@@ -53,8 +44,6 @@ export default function NavigationBar({ onToggleColorMode }: NavigationBarProps)
         bgcolor: 'transparent',
         backgroundImage: 'none',
         mt: 'calc(var(--template-frame-height, 0px) + 28px)',
-        border: 0,
-        borderBottom: 0,
       }}
     >
       <Container maxWidth="lg">
@@ -74,10 +63,10 @@ export default function NavigationBar({ onToggleColorMode }: NavigationBarProps)
               <Button variant="text" color="info" size="small">
                 Pricing
               </Button>
-              <Button variant="text" color="info" size="small" sx={{ minWidth: 0 }}>
+              <Button variant="text" color="info" size="small">
                 FAQ
               </Button>
-              <Button variant="text" color="info" size="small" sx={{ minWidth: 0 }}>
+              <Button variant="text" color="info" size="small">
                 Blog
               </Button>
             </Box>
@@ -95,10 +84,10 @@ export default function NavigationBar({ onToggleColorMode }: NavigationBarProps)
             <Button color="primary" variant="contained" size="small">
               Sign up
             </Button>
-            <ColorModeIconDropdown onToggleColorMode={onToggleColorMode} />
+            <ColorModeIconDropdown />
           </Box>
           <Box sx={{ display: { xs: 'flex', md: 'none' }, gap: 1 }}>
-            <ColorModeIconDropdown onToggleColorMode={onToggleColorMode} size="medium" />
+            <ColorModeIconDropdown size="medium" />
             <IconButton aria-label="Menu button" onClick={toggleDrawer(true)}>
               <MenuIcon />
             </IconButton>
