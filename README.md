@@ -25,13 +25,6 @@ This repository serves as a collection of Cursor Rules that help maintain consis
 
 Each rule in the `.cursor/rules` directory contains detailed documentation about its purpose and requirements. The rules are designed to be used with Cursor IDE to enforce best practices and maintain consistency across projects.
 
-## Contributing
-
-Feel free to contribute by:
-1. Adding new rules for other React libraries or frameworks
-2. Improving existing rules
-3. Suggesting best practices for specific use cases
-
 ## License
 
 MIT 
