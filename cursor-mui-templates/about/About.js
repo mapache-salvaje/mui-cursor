@@ -11,12 +11,7 @@ import History from './components/History';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 
-interface AboutProps {
-  mode: 'light' | 'dark';
-  onToggleColorMode: () => void;
-}
-
-export default function About({ mode, onToggleColorMode }: AboutProps) {
+export default function About({ mode, onToggleColorMode }) {
   return (
     <AppTheme mode={mode}>
       <CssBaseline enableColorScheme />

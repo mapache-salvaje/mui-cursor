@@ -1,26 +1,89 @@
 import * as React from 'react';
+import DarkModeIcon from '@mui/icons-material/DarkModeRounded';
+import LightModeIcon from '@mui/icons-material/LightModeRounded';
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
-import Brightness4Icon from '@mui/icons-material/Brightness4';
-import Brightness7Icon from '@mui/icons-material/Brightness7';
-import { useTheme } from '@mui/material/styles';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import { useColorScheme } from '@mui/material/styles';
 
-interface ColorModeIconDropdownProps {
-  onToggleColorMode: () => void;
-}
-
-export default function ColorModeIconDropdown({ onToggleColorMode }: ColorModeIconDropdownProps) {
-  const theme = useTheme();
-
+export default function ColorModeIconDropdown(props) {
+  const { mode, systemMode, setMode } = useColorScheme();
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+  const handleMode = (targetMode) => () => {
+    setMode(targetMode);
+    handleClose();
+  };
+  if (!mode) {
+    return (
+      <Box
+        data-screenshot="toggle-mode"
+        sx={(theme) => ({
+          verticalAlign: 'bottom',
+          display: 'inline-flex',
+          width: '2.25rem',
+          height: '2.25rem',
+          borderRadius: (theme.vars || theme).shape.borderRadius,
+          border: '1px solid',
+          borderColor: (theme.vars || theme).palette.divider,
+        })}
+      />
+    );
+  }
+  const resolvedMode = systemMode || mode;
+  const icon = {
+    light: <LightModeIcon />,
+    dark: <DarkModeIcon />,
+  }[resolvedMode];
   return (
-    <Box>
+    <React.Fragment>
       <IconButton
-        sx={{ ml: 1 }}
-        onClick={onToggleColorMode}
-        color="inherit"
+        data-screenshot="toggle-mode"
+        onClick={handleClick}
+        disableRipple
+        size="small"
+        aria-controls={open ? 'color-scheme-menu' : undefined}
+        aria-haspopup="true"
+        aria-expanded={open ? 'true' : undefined}
+        {...props}
       >
-        {theme.palette.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
+        {icon}
       </IconButton>
-    </Box>
+      <Menu
+        anchorEl={anchorEl}
+        id="account-menu"
+        open={open}
+        onClose={handleClose}
+        onClick={handleClose}
+        slotProps={{
+          paper: {
+            variant: 'outlined',
+            elevation: 0,
+            sx: {
+              my: '4px',
+            },
+          },
+        }}
+        transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+        anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+      >
+        <MenuItem selected={mode === 'system'} onClick={handleMode('system')}>
+          System
+        </MenuItem>
+        <MenuItem selected={mode === 'light'} onClick={handleMode('light')}>
+          Light
+        </MenuItem>
+        <MenuItem selected={mode === 'dark'} onClick={handleMode('dark')}>
+          Dark
+        </MenuItem>
+      </Menu>
+    </React.Fragment>
   );
 }

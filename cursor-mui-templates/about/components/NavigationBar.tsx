@@ -8,7 +8,7 @@ import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import Drawer from '@mui/material/Drawer';
 import MenuIcon from '@mui/icons-material/Menu';
-import ColorModeIconDropdown from '../../shared-theme/ColorModeIconDropdown';
+import ColorModeIconDropdown from '../shared-theme/ColorModeIconDropdown';
 
 const logoStyle = {
   width: '140px',
@@ -17,10 +17,10 @@ const logoStyle = {
 };
 
 interface NavigationBarProps {
-  toggleColorMode: () => void;
+  onToggleColorMode: () => void;
 }
 
-function NavigationBar({ toggleColorMode }: NavigationBarProps) {
+export default function NavigationBar({ onToggleColorMode }: NavigationBarProps) {
   const [open, setOpen] = React.useState(false);
 
   const toggleDrawer = (newOpen: boolean) => () => {
@@ -42,7 +42,7 @@ function NavigationBar({ toggleColorMode }: NavigationBarProps) {
         elevation={0}
         sx={{
           bgcolor: 'background.paper',
-          display: { xs: 'none', md: 'none' },
+          display: { xs: 'none', md: 'block' },
         }}
       >
         <Container maxWidth="lg">
@@ -118,7 +118,7 @@ function NavigationBar({ toggleColorMode }: NavigationBarProps) {
               </Box>
             </Box>
             <Box sx={{ display: { flex: 'none', md: 'flex' }, gap: 0.5 }}>
-              <ColorModeIconDropdown onToggleColorMode={toggleColorMode} />
+              <ColorModeIconDropdown onToggleColorMode={onToggleColorMode} />
             </Box>
             <Box sx={{ display: { sm: '', md: 'none' } }}>
               <Button
@@ -158,7 +158,7 @@ function NavigationBar({ toggleColorMode }: NavigationBarProps) {
                       flexGrow: 1,
                     }}
                   >
-                    <ColorModeIconDropdown onToggleColorMode={toggleColorMode} />
+                    <ColorModeIconDropdown onToggleColorMode={onToggleColorMode} />
                     <MenuItem onClick={() => scrollToSection('mission')}>
                       Mission
                     </MenuItem>
@@ -183,6 +183,4 @@ function NavigationBar({ toggleColorMode }: NavigationBarProps) {
       </AppBar>
     </div>
   );
-}
-
-export default NavigationBar; 
+} 

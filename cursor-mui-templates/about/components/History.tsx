@@ -3,12 +3,6 @@ import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
-import Timeline from '@mui/material/Timeline';
-import TimelineItem from '@mui/material/TimelineItem';
-import TimelineSeparator from '@mui/material/TimelineSeparator';
-import TimelineConnector from '@mui/material/TimelineConnector';
-import TimelineContent from '@mui/material/TimelineContent';
-import TimelineDot from '@mui/material/TimelineDot';
 import { alpha, useTheme } from '@mui/material/styles';
 
 const history = [
@@ -35,7 +29,7 @@ const history = [
   {
     year: '2024',
     title: 'Future Forward',
-    description: 'Continuing to innovate and grow, we're shaping the future of our industry.',
+    description: 'Continuing to innovate and grow, we\'re shaping the future of our industry.',
   },
 ];
 
@@ -93,47 +87,56 @@ export default function History() {
             />
           </Grid>
           <Grid item xs={12} md={6}>
-            <Timeline position="right">
+            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
               {history.map((item, index) => (
-                <TimelineItem key={index}>
-                  <TimelineSeparator>
-                    <TimelineDot color="primary" />
-                    {index < history.length - 1 && <TimelineConnector />}
-                  </TimelineSeparator>
-                  <TimelineContent>
-                    <Typography
-                      variant="h6"
-                      sx={{
-                        color: 'primary.main',
-                        fontWeight: 'bold',
-                        mb: 1,
-                      }}
-                    >
-                      {item.year}
-                    </Typography>
-                    <Typography
-                      variant="h6"
-                      sx={{
-                        color: 'text.primary',
-                        fontWeight: 'bold',
-                        mb: 1,
-                      }}
-                    >
-                      {item.title}
-                    </Typography>
-                    <Typography
-                      variant="body1"
-                      sx={{
-                        color: 'text.secondary',
-                        lineHeight: 1.8,
-                      }}
-                    >
-                      {item.description}
-                    </Typography>
-                  </TimelineContent>
-                </TimelineItem>
+                <Box
+                  key={index}
+                  sx={{
+                    position: 'relative',
+                    pl: 4,
+                    '&::before': {
+                      content: '""',
+                      position: 'absolute',
+                      left: 0,
+                      top: 0,
+                      bottom: 0,
+                      width: 2,
+                      backgroundColor: 'primary.main',
+                    },
+                  }}
+                >
+                  <Typography
+                    variant="h6"
+                    sx={{
+                      color: 'primary.main',
+                      fontWeight: 'bold',
+                      mb: 1,
+                    }}
+                  >
+                    {item.year}
+                  </Typography>
+                  <Typography
+                    variant="h6"
+                    sx={{
+                      color: 'text.primary',
+                      fontWeight: 'bold',
+                      mb: 1,
+                    }}
+                  >
+                    {item.title}
+                  </Typography>
+                  <Typography
+                    variant="body1"
+                    sx={{
+                      color: 'text.secondary',
+                      lineHeight: 1.8,
+                    }}
+                  >
+                    {item.description}
+                  </Typography>
+                </Box>
               ))}
-            </Timeline>
+            </Box>
           </Grid>
         </Grid>
       </Container>

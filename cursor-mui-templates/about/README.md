@@ -1,15 +1,59 @@
 # About Page Template
 
-A beautiful and responsive About page template built with Material UI v6 and React. This template provides a modern and professional design for company About pages, featuring sections for company information, values, team members, and contact details.
+A modern, responsive about page template built with Material UI.
 
 ## Features
 
-- 🎨 Modern and clean design
-- 🌓 Light and dark mode support
-- 📱 Fully responsive layout
-- 🎯 Smooth scroll navigation
-- 🎭 Customizable components
-- 🎨 Consistent styling with Material UI v6
+- Responsive design that works on all screen sizes
+- Dark/light mode support
+- Smooth scrolling navigation
+- Modern, clean UI components
+- Easy to customize and extend
+
+## Usage
+
+```jsx
+import About from './about/About';
+
+function App() {
+  const [mode, setMode] = React.useState('light');
+
+  const toggleColorMode = () => {
+    setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'));
+  };
+
+  return <About mode={mode} onToggleColorMode={toggleColorMode} />;
+}
+```
+
+## Props
+
+| Prop | Type | Description |
+|------|------|-------------|
+| mode | 'light' \| 'dark' | The current color mode |
+| onToggleColorMode | () => void | Function to toggle between light and dark mode |
+
+## Components
+
+The template includes the following components:
+
+- NavigationBar: Main navigation with color mode toggle
+- Hero: Hero section with main heading and description
+- MissionStatement: Company mission and vision
+- CompanyValues: Core company values
+- History: Company history timeline
+- TeamSection: Team members showcase
+- Contact: Contact information and form
+- Footer: Site footer with links and social media
+
+## Customization
+
+You can customize the template by:
+
+1. Modifying the theme in `shared-theme/AppTheme.tsx`
+2. Updating component styles in their respective files
+3. Adding or removing sections as needed
+4. Customizing the content in each component
 
 ## Sections
 

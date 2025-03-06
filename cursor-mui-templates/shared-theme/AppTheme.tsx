@@ -1,36 +1,26 @@
 import * as React from 'react';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
-import type { ThemeOptions } from '@mui/material/styles';
+
 import { inputsCustomizations } from './customizations/inputs';
 import { dataDisplayCustomizations } from './customizations/dataDisplay';
 import { feedbackCustomizations } from './customizations/feedback';
 import { navigationCustomizations } from './customizations/navigation';
 import { surfacesCustomizations } from './customizations/surfaces';
-import { colorSchemes, typography, shadows, shape } from './themePrimitives';
+import { getDesignTokens } from './themePrimitives';
 
 interface AppThemeProps {
   children: React.ReactNode;
-  /**
-   * This is for the docs site. You can ignore it or remove it.
-   */
+  mode: 'light' | 'dark';
   disableCustomTheme?: boolean;
-  themeComponents?: ThemeOptions['components'];
+  themeComponents?: Record<string, any>;
 }
 
-export default function AppTheme(props: AppThemeProps) {
-  const { children, disableCustomTheme, themeComponents } = props;
-
+function AppTheme({ children, mode, disableCustomTheme, themeComponents }: AppThemeProps) {
   const theme = React.useMemo(() => {
     return disableCustomTheme
       ? {}
       : createTheme({
-          palette: {
-            mode: 'light',
-            ...colorSchemes.light,
-          },
-          typography,
-          shape,
-          shadows,
+          ...getDesignTokens(mode),
           components: {
             ...inputsCustomizations,
             ...dataDisplayCustomizations,
@@ -40,15 +30,13 @@ export default function AppTheme(props: AppThemeProps) {
             ...themeComponents,
           },
         });
-  }, [disableCustomTheme, themeComponents]);
+  }, [disableCustomTheme, themeComponents, mode]);
 
   if (disableCustomTheme) {
     return <React.Fragment>{children}</React.Fragment>;
   }
 
-  return (
-    <ThemeProvider theme={theme} disableTransitionOnChange>
-      {children}
-    </ThemeProvider>
-  );
+  return <ThemeProvider theme={theme}>{children}</ThemeProvider>;
 }
+
+export default AppTheme;

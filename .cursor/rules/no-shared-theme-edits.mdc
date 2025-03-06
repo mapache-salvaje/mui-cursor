@@ -1,4 +1,4 @@
- ---
+---
 description: Rule to prevent editing shared theme files
 globs: ["**/shared-theme/**"]
 alwaysApply: true

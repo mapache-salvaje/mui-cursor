@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { Theme, alpha, Components } from '@mui/material/styles';
-import { SvgIconProps } from '@mui/material/SvgIcon';
+import { alpha } from '@mui/material/styles';
+
 import { buttonBaseClasses } from '@mui/material/ButtonBase';
 import { dividerClasses } from '@mui/material/Divider';
 import { menuItemClasses } from '@mui/material/MenuItem';
@@ -10,7 +10,7 @@ import UnfoldMoreRoundedIcon from '@mui/icons-material/UnfoldMoreRounded';
 import { gray, brand } from '../themePrimitives';
 
 /* eslint-disable import/prefer-default-export */
-export const navigationCustomizations: Components<Theme> = {
+export const navigationCustomizations = {
   MuiMenuItem: {
     styleOverrides: {
       root: ({ theme }) => ({
@@ -58,7 +58,7 @@ export const navigationCustomizations: Components<Theme> = {
   },
   MuiSelect: {
     defaultProps: {
-      IconComponent: React.forwardRef<SVGSVGElement, SvgIconProps>((props, ref) => (
+      IconComponent: React.forwardRef((props, ref) => (
         <UnfoldMoreRoundedIcon fontSize="small" {...props} ref={ref} />
       )),
     },
@@ -81,7 +81,6 @@ export const navigationCustomizations: Components<Theme> = {
         '&:before, &:after': {
           display: 'none',
         },
-
         ...theme.applyStyles('dark', {
           borderRadius: (theme.vars || theme).shape.borderRadius,
           borderColor: gray[700],
