@@ -1,28 +1,41 @@
----
-description: Rule to prevent AI from modifying Cursor rule files
-globs: ["*.mdc"]
-alwaysApply: true
----
+# No Direct MDC Edits
 
-# No AI MDC File Edits
-
-Rule to prevent AI from modifying Cursor rule files.
+Rule to prevent unauthorized modifications to Cursor rule (.mdc) files.
 
 <rule>
 name: no-ai-mdc-edits
-description: Prevent AI from modifying .mdc files
+description: Control modifications to .mdc files with explicit user permission
 filters:
   - type: file_extension
     pattern: "\\.mdc$"
   - type: event
     pattern: "file_modify"
 actions:
+  - type: enforce
+    message: |
+      CRITICAL: MDC file modifications require explicit user permission
+      
+      1. NEVER modify .mdc files without explicit user approval
+      2. ALWAYS propose changes first for user review
+      3. ONLY commit and push after user explicitly approves
+      4. ALL changes must be documented and reviewed
+      5. NO automatic or implicit modifications
+      
+      Process:
+      1. Propose rule changes in markdown format
+      2. Wait for user review and explicit approval
+      3. After approval, commit and push changes
+      4. Document all changes in commit message
   - type: reject
-    message: "AI cannot modify .mdc files. These files can only be modified by the user."
+    conditions:
+      - pattern: ".*\\.mdc$"
+        message: "Direct MDC edits without user approval are not allowed"
 examples:
-  - input: "AI attempting to edit .mdc file"
-    output: "Rejected: AI cannot modify .mdc files"
+  - input: "Attempting direct edit to rule.mdc"
+    output: "REJECTED: Propose changes for user review first"
+  - input: "User approved edit to rule.mdc"
+    output: "ACCEPTED: Proceed with commit and push"
 metadata:
-  priority: high
-  version: 1.0
+  priority: critical
+  version: 2.0
 </rule>

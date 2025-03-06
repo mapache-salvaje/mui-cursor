@@ -1,26 +1,48 @@
----
-description: Rule to prevent editing shared theme files
-globs: ["**/shared-theme/**"]
-alwaysApply: true
----
-
 # No Shared Theme Edits
 
-Rule to prevent any modifications to shared theme files.
+Rule to prevent any modifications to shared theme files and directories.
 
 <rule>
 name: no-shared-theme-edits
-description: Prevent any modifications to files in shared-theme directories
+description: Prevent any modifications to shared-theme files and directories
 filters:
   - type: file_path
     pattern: ".*/shared-theme/.*"
+  - type: file_path
+    pattern: ".*shared-theme.*"
+  - type: content
+    pattern: "shared-theme"
 actions:
   - type: reject
-    message: "Editing shared theme files is not allowed. These files should be treated as immutable."
+    message: |
+      CRITICAL: Shared theme files and directories are STRICTLY OFF-LIMITS
+      
+      1. NO modifications to any files in shared-theme directories
+      2. NO renaming of shared-theme files or directories
+      3. NO moving shared-theme files or directories
+      4. NO copying or duplicating shared-theme files
+      5. NO deleting shared-theme files or directories
+      6. NO changing file extensions of shared-theme files
+      7. NO touching shared-theme in any way
+      
+      These files are managed centrally and must remain untouched.
+      Use the existing shared-theme files as-is through imports only.
+  - type: enforce
+    conditions:
+      - pattern: ".*\\.js$"
+        message: "Do not convert shared-theme file extensions"
+      - pattern: ".*\\.jsx$"
+        message: "Do not convert shared-theme file extensions"
+      - pattern: ".*\\.tsx?$"
+        message: "Do not convert shared-theme file extensions"
 examples:
-  - input: "src/shared-theme/AppTheme.tsx"
-    output: "Rejected: Cannot modify shared theme files"
+  - input: "Attempting to modify src/shared-theme/AppTheme.tsx"
+    output: "REJECTED: shared-theme files cannot be modified"
+  - input: "Attempting to rename shared-theme/ColorModeSelect.js to .jsx"
+    output: "REJECTED: shared-theme files cannot have extensions changed"
+  - input: "Attempting to copy shared-theme files"
+    output: "REJECTED: shared-theme files cannot be duplicated"
 metadata:
-  priority: high
-  version: 1.0
+  priority: critical
+  version: 2.0
 </rule>
