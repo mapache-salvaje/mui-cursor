@@ -1,32 +1,31 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
+import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import { alpha, useTheme } from '@mui/material/styles';
 
-export default function Hero() {
+export default function PricingHero() {
   const theme = useTheme();
-
+  
   return (
     <Box
-      id="hero"
+      id="pricing-hero"
       sx={(theme) => ({
         width: '100%',
         backgroundImage:
           theme.palette.mode === 'light'
-            ? 'linear-gradient(180deg, #CEE5FD 0%, #F6F9FC 100%)'
+            ? 'linear-gradient(180deg, #F6F9FC 0%, #FFFFFF 100%)'
             : `linear-gradient(180deg, ${alpha(
-                theme.palette.primary.main,
-                0.2,
+                theme.palette.background.paper,
+                0.8,
               )} 0%, ${alpha(theme.palette.background.paper, 0.2)} 100%)`,
         backgroundSize: '100% 20%',
         backgroundRepeat: 'no-repeat',
-        backgroundColor:
-          theme.palette.mode === 'light'
-            ? 'white'
-            : theme.palette.background.paper,
-        pt: { xs: 20, sm: 24 },
-        pb: { xs: 8, sm: 12 },
+        backgroundColor: theme.palette.mode === 'light'
+          ? 'white'
+          : theme.palette.background.paper,
+        py: { xs: 8, sm: 12 },
         px: { xs: 2, sm: 0 },
         position: 'relative',
         '&::before': {
@@ -43,38 +42,12 @@ export default function Hero() {
         },
       })}
     >
-      <Container
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          gap: { xs: 3, sm: 6 },
-          position: 'relative',
-          zIndex: 1,
-        }}
-      >
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            gap: 2,
-            textAlign: 'center',
-            maxWidth: 800,
-            mx: 'auto',
-          }}
-        >
+      <Container>
+        <Stack spacing={3} alignItems="center" textAlign="center">
           <Typography
-            variant="h1"
+            component="h1"
+            variant="h2"
             sx={{
-              display: 'flex',
-              flexDirection: { xs: 'column', md: 'row' },
-              alignSelf: 'center',
-              textAlign: 'center',
-              fontSize: 'clamp(3.5rem, 10vw, 4rem)',
-              fontWeight: 700,
-              lineHeight: 1.2,
-              mb: 2,
               background: theme.palette.mode === 'light'
                 ? `linear-gradient(45deg, ${theme.palette.primary.main}, ${theme.palette.primary.dark})`
                 : `linear-gradient(45deg, ${theme.palette.primary.light}, ${theme.palette.primary.main})`,
@@ -82,25 +55,20 @@ export default function Hero() {
               textFillColor: 'transparent',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
+              mb: 1,
             }}
           >
-            About Our Company
+            Simple, transparent pricing
           </Typography>
           <Typography
-            textAlign="center"
+            variant="body1"
             color="text.secondary"
-            sx={{
-              maxWidth: 600,
-              fontSize: 'clamp(1rem, 2vw, 1.25rem)',
-              lineHeight: 1.8,
-              mb: 4,
-            }}
+            sx={{ maxWidth: 600, mx: 'auto', mb: 2 }}
           >
-            We are a team of passionate individuals dedicated to creating innovative solutions
-            that make a difference in people's lives. Our journey began with a simple idea
-            and has grown into a global movement.
+            Choose the perfect plan for your needs. Whether you're just starting out or scaling up,
+            we've got you covered with flexible options and no hidden fees.
           </Typography>
-        </Box>
+        </Stack>
       </Container>
     </Box>
   );

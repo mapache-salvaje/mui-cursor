@@ -1,17 +1,19 @@
 import * as React from 'react';
 import AppTheme from './shared-theme/AppTheme';
-import About from './About';
+import Pricing from './Pricing';
+import CssBaseline from '@mui/material/CssBaseline';
 
 function App() {
   const [mode, setMode] = React.useState<'light' | 'dark'>('light');
 
-  const toggleColorMode = () => {
+  const toggleColorMode = React.useCallback(() => {
     setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'));
-  };
+  }, []);
 
   return (
     <AppTheme mode={mode}>
-      <About mode={mode} onToggleColorMode={toggleColorMode} />
+      <CssBaseline enableColorScheme />
+      <Pricing onToggleColorMode={toggleColorMode} />
     </AppTheme>
   );
 }
