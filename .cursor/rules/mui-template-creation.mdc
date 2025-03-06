@@ -33,124 +33,173 @@ actions:
          │   └── Template.js     # JavaScript version
          ```
 
-      2. Template Component Structure:
+      2. Component Design Principles:
          ```tsx
-         // Template.tsx
+         // Base component structure with animations and theme integration
          import * as React from 'react';
-         import CssBaseline from '@mui/material/CssBaseline';
-         import AppTheme from '../shared-theme/AppTheme';
-         
-         interface TemplateProps {
-           mode: 'light' | 'dark';
-           onToggleColorMode: () => void;
-         }
-         
-         export default function Template({ mode, onToggleColorMode }: TemplateProps) {
+         import Box from '@mui/material/Box';
+         import Container from '@mui/material/Container';
+         import { alpha, useTheme } from '@mui/material/styles';
+
+         export default function Component() {
+           const theme = useTheme();
+
            return (
-             <AppTheme mode={mode}>
-               <CssBaseline enableColorScheme />
-               {/* Template content */}
-             </AppTheme>
+             <Box
+               id="section-id"
+               sx={(theme) => ({
+                 width: '100%',
+                 backgroundImage:
+                   theme.palette.mode === 'light'
+                     ? 'linear-gradient(180deg, #F6F9FC 0%, #FFFFFF 100%)'
+                     : `linear-gradient(180deg, ${alpha(
+                         theme.palette.background.paper,
+                         0.8,
+                       )} 0%, ${alpha(theme.palette.background.paper, 0.2)} 100%)`,
+                 backgroundSize: '100% 20%',
+                 backgroundRepeat: 'no-repeat',
+                 backgroundColor: theme.palette.mode === 'light'
+                   ? 'white'
+                   : theme.palette.background.paper,
+                 py: { xs: 8, sm: 10 },
+                 px: { xs: 2, sm: 0 },
+                 position: 'relative',
+                 '&::before': {
+                   content: '""',
+                   position: 'absolute',
+                   top: 0,
+                   left: 0,
+                   right: 0,
+                   bottom: 0,
+                   background: theme.palette.mode === 'light'
+                     ? `radial-gradient(circle at 50% 50%, ${alpha(theme.palette.primary.main, 0.1)} 0%, transparent 50%)`
+                     : `radial-gradient(circle at 50% 50%, ${alpha(theme.palette.primary.main, 0.2)} 0%, transparent 50%)`,
+                   zIndex: 0,
+                 },
+               })}
+             >
+               <Container>
+                 {/* Component content */}
+               </Container>
+             </Box>
            );
          }
+
+         // Card hover effect
+         sx={{
+           transition: 'all 0.3s ease-in-out',
+           '&:hover': {
+             transform: 'translateY(-8px)',
+             boxShadow: (theme) =>
+               `0 12px 24px ${alpha(theme.palette.primary.main, 0.1)}`,
+           },
+         }}
+
+         // Button hover effect
+         sx={{
+           transition: 'all 0.3s ease-in-out',
+           '&:hover': {
+             transform: 'translateY(-2px)',
+             boxShadow: (theme) =>
+               `0 8px 16px ${alpha(theme.palette.primary.main, 0.2)}`,
+           },
+         }}
+
+         // Icon hover effect
+         sx={{
+           transition: 'transform 0.3s ease-in-out',
+           '&:hover': {
+             transform: 'scale(1.1)',
+           },
+         }}
+
+         // Text field hover effect
+         sx={{
+           '& .MuiOutlinedInput-root': {
+             transition: 'all 0.3s ease-in-out',
+             '&:hover': {
+               transform: 'translateY(-2px)',
+             },
+           },
+         }}
+
+         // Gradient text
+         sx={{
+           background: theme.palette.mode === 'light'
+             ? `linear-gradient(45deg, ${theme.palette.primary.main}, ${theme.palette.primary.dark})`
+             : `linear-gradient(45deg, ${theme.palette.primary.light}, ${theme.palette.primary.main})`,
+           backgroundClip: 'text',
+           textFillColor: 'transparent',
+           WebkitBackgroundClip: 'text',
+           WebkitTextFillColor: 'transparent',
+         }}
+
+         // Floating animation
+         '@keyframes float': {
+           '0%': { transform: 'translateY(0px)' },
+           '50%': { transform: 'translateY(-20px)' },
+           '100%': { transform: 'translateY(0px)' },
+         },
+         animation: 'float 6s ease-in-out infinite',
          ```
 
-      3. README.md Structure:
-         ```markdown
-         # Template Name
-         
-         Brief description of the template's purpose.
-         
-         ## Features
-         
-         - Key feature 1
-         - Key feature 2
-         - etc.
-         
-         ## Usage
-         
-         ```jsx
-         import Template from './template-name/Template';
-         
-         function App() {
-           const [mode, setMode] = React.useState('light');
-           const toggleColorMode = () => {
-             setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'));
-           };
-           
-           return <Template mode={mode} onToggleColorMode={toggleColorMode} />;
-         }
-         ```
-         
-         ## Props
-         
-         | Prop | Type | Description |
-         |------|------|-------------|
-         | mode | 'light' \| 'dark' | The current color mode |
-         | onToggleColorMode | () => void | Function to toggle between light and dark mode |
-         
-         ## Components
-         
-         List of main components included in the template.
-         
-         ## Customization
-         
-         Instructions for customizing the template.
-         ```
+      3. Component Guidelines:
+         - All interactive elements should have hover states
+         - Use consistent animation timing (0.3s ease-in-out)
+         - Implement theme-aware gradients and colors
+         - Add subtle shadows and elevation changes
+         - Include micro-interactions
+         - Use responsive spacing and typography
+         - Maintain dark mode compatibility
 
-      4. Component Guidelines:
-         - Keep components modular and reusable
-         - Use TypeScript for type safety
-         - Follow MUI's component patterns
-         - Include proper prop types
-         - Use consistent naming conventions
-         - Keep components focused and single-purpose
+      4. Theme Integration:
+         - Use theme.palette.mode for light/dark variants
+         - Use alpha utility for transparent colors
+         - Use theme.palette colors for gradients
+         - Follow MUI's spacing scale
+         - Use theme breakpoints for responsiveness
 
-      5. Theme Integration:
-         - Use AppTheme from shared-theme
-         - Pass mode and onToggleColorMode props
-         - Do not modify shared-theme files
-         - Use MUI's theme system for styling
-
-      6. Testing:
-         - Test with both light and dark modes
+      5. Testing:
+         - Test animations in both light and dark modes
          - Verify responsive design
          - Check accessibility
          - Test in different browsers
          - Verify integration works
-
-      7. Integration Testing:
-         - Create test integration in integrations/
-         - Test with different project types
-         - Verify all dependencies work
-         - Check build process
-         - Test hot reloading
-
-      8. Important Notes:
-         - Never modify shared-theme files
-         - Keep both .tsx and .js versions in sync
-         - Document all props and customization options
-         - Follow MUI v6 best practices
-         - Use proper TypeScript types
-         - Keep components lightweight
-         - Follow accessibility guidelines
+         - Test keyboard navigation
+         - Check animation performance
 
 examples:
   - input: |
-      # Bad: Missing required files
-      template-name/
-      ├── Template.tsx
-      └── README.md
+      # Bad: Static components without interactions
+      <Card>
+        <CardContent>
+          <Typography>Static content</Typography>
+        </CardContent>
+      </Card>
 
-      # Good: Complete template structure
-      template-name/
-      ├── components/
-      │   ├── Component1.tsx
-      │   └── Component2.tsx
-      ├── README.md
-      ├── Template.tsx
-      └── Template.js
-    output: "Follow the complete template structure with all required files"
+      # Good: Interactive components with animations
+      <Card
+        sx={{
+          transition: 'all 0.3s ease-in-out',
+          '&:hover': {
+            transform: 'translateY(-8px)',
+            boxShadow: (theme) =>
+              `0 12px 24px ${alpha(theme.palette.primary.main, 0.1)}`,
+          },
+        }}
+      >
+        <CardContent>
+          <Typography
+            sx={{
+              transition: 'color 0.3s ease-in-out',
+              '&:hover': { color: 'primary.main' },
+            }}
+          >
+            Interactive content
+          </Typography>
+        </CardContent>
+      </Card>
+    output: "Use interactive components with smooth animations"
 
 metadata:
   priority: high
