@@ -22,6 +22,14 @@ filters:
 actions:
   - type: reject
     conditions:
+      - pattern: "^(?!---\\s*\\n)"
+        message: "Rule files must start with frontmatter (---)"
+      - pattern: "^(?!---\\s*\\ndescription:)"
+        message: "Rule files must have a description in frontmatter"
+      - pattern: "^(?!---\\s*\\ndescription:.*\\nglobs:)"
+        message: "Rule files must have globs defined in frontmatter"
+      - pattern: "^(?!---\\s*\\ndescription:.*\\nglobs:.*\\nalwaysApply:)"
+        message: "Rule files must have alwaysApply defined in frontmatter"
       - pattern: "^---\\s*\\n---\\s*\\n---"
         message: "Rule file contains duplicate frontmatter sections"
       - pattern: "^---\\s*\\n\\s*\\n---"
@@ -37,7 +45,7 @@ actions:
     message: |
       Cursor rule files must follow this exact format:
 
-      1. Frontmatter (required):
+      1. Frontmatter (REQUIRED):
          ```yaml
          ---
          description: Clear description of the rule's purpose
@@ -45,10 +53,11 @@ actions:
          alwaysApply: true
          ---
          ```
+         - MUST be the first thing in the file
+         - MUST contain description, globs, and alwaysApply
          - No spaces after the dashes
          - Single line break after opening dash
          - Single line break before closing dash
-         - All fields must be present
          - Keep globs simple unless complex patterns are required
 
       2. Title and Description:
@@ -88,20 +97,31 @@ actions:
 
 examples:
   - input: |
+      # Bad: Missing frontmatter
+      # My Rule
+      <rule>
+      name: my-rule
+      </rule>
+
+      # Bad: Incomplete frontmatter
+      ---
+      description: My rule
+      ---
+
+      # Bad: Complex glob pattern
       ---
       description: My rule
       globs: ["*.ts", "*.tsx", "src/**/*.js"]
       alwaysApply: false
       ---
-    output: "Rejected: Use simple glob ['*'] unless complex patterns required"
 
-  - input: |
+      # Good: Complete frontmatter with simple glob
       ---
       description: My rule
       globs: ["*"]
       alwaysApply: true
       ---
-    output: "Accepted: Simple glob pattern used"
+    output: "Rule files must have complete frontmatter with all required fields and simple glob pattern"
 
 metadata:
   priority: high
