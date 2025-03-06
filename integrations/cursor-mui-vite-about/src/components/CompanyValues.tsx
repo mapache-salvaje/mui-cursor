@@ -75,6 +75,8 @@ export default function CompanyValues() {
               alignSelf: 'center',
               textAlign: 'center',
               fontSize: 'clamp(2.5rem, 8vw, 3rem)',
+              fontWeight: 700,
+              mb: 2,
             }}
           >
             Our Values
@@ -95,6 +97,32 @@ export default function CompanyValues() {
                       theme.palette.mode === 'light'
                         ? alpha(theme.palette.primary.main, 0.04)
                         : alpha(theme.palette.primary.main, 0.1),
+                    transition: 'all 0.3s ease-in-out',
+                    position: 'relative',
+                    overflow: 'hidden',
+                    '&::before': {
+                      content: '""',
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                      right: 0,
+                      bottom: 0,
+                      background: (theme) =>
+                        `linear-gradient(45deg, ${alpha(
+                          theme.palette.primary.main,
+                          0.1,
+                        )}, ${alpha(theme.palette.primary.main, 0)})`,
+                      opacity: 0,
+                      transition: 'opacity 0.3s ease-in-out',
+                    },
+                    '&:hover': {
+                      transform: 'translateY(-8px)',
+                      boxShadow: (theme) =>
+                        `0 12px 24px ${alpha(theme.palette.primary.main, 0.1)}`,
+                      '&::before': {
+                        opacity: 1,
+                      },
+                    },
                   }}
                 >
                   <Box
@@ -103,14 +131,30 @@ export default function CompanyValues() {
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
+                      transition: 'transform 0.3s ease-in-out',
+                      '&:hover': {
+                        transform: 'scale(1.1)',
+                      },
                     }}
                   >
                     {value.icon}
                   </Box>
-                  <Typography variant="h6" component="h3">
+                  <Typography
+                    variant="h6"
+                    component="h3"
+                    sx={{
+                      fontWeight: 600,
+                      color: 'text.primary',
+                    }}
+                  >
                     {value.title}
                   </Typography>
-                  <Typography color="text.secondary">
+                  <Typography
+                    color="text.secondary"
+                    sx={{
+                      lineHeight: 1.8,
+                    }}
+                  >
                     {value.description}
                   </Typography>
                 </Box>

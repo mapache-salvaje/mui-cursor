@@ -56,6 +56,18 @@ export default function Contact() {
                 display: 'flex',
                 flexDirection: 'column',
                 gap: 4,
+                p: 4,
+                borderRadius: 2,
+                backgroundColor: (theme) =>
+                  theme.palette.mode === 'light'
+                    ? alpha(theme.palette.primary.main, 0.04)
+                    : alpha(theme.palette.primary.main, 0.1),
+                transition: 'all 0.3s ease-in-out',
+                '&:hover': {
+                  transform: 'translateY(-4px)',
+                  boxShadow: (theme) =>
+                    `0 12px 24px ${alpha(theme.palette.primary.main, 0.1)}`,
+                },
               }}
             >
               <Box
@@ -63,9 +75,22 @@ export default function Contact() {
                   display: 'flex',
                   alignItems: 'center',
                   gap: 2,
+                  transition: 'all 0.3s ease-in-out',
+                  '&:hover': {
+                    transform: 'translateX(8px)',
+                  },
                 }}
               >
-                <LocationOnIcon color="primary" />
+                <LocationOnIcon
+                  color="primary"
+                  sx={{
+                    fontSize: 32,
+                    transition: 'transform 0.3s ease-in-out',
+                    '&:hover': {
+                      transform: 'scale(1.1)',
+                    },
+                  }}
+                />
                 <Typography variant="body1">
                   123 Business Street, Suite 100
                   <br />
@@ -77,9 +102,22 @@ export default function Contact() {
                   display: 'flex',
                   alignItems: 'center',
                   gap: 2,
+                  transition: 'all 0.3s ease-in-out',
+                  '&:hover': {
+                    transform: 'translateX(8px)',
+                  },
                 }}
               >
-                <PhoneIcon color="primary" />
+                <PhoneIcon
+                  color="primary"
+                  sx={{
+                    fontSize: 32,
+                    transition: 'transform 0.3s ease-in-out',
+                    '&:hover': {
+                      transform: 'scale(1.1)',
+                    },
+                  }}
+                />
                 <Typography variant="body1">+1 (555) 123-4567</Typography>
               </Box>
               <Box
@@ -87,9 +125,22 @@ export default function Contact() {
                   display: 'flex',
                   alignItems: 'center',
                   gap: 2,
+                  transition: 'all 0.3s ease-in-out',
+                  '&:hover': {
+                    transform: 'translateX(8px)',
+                  },
                 }}
               >
-                <EmailIcon color="primary" />
+                <EmailIcon
+                  color="primary"
+                  sx={{
+                    fontSize: 32,
+                    transition: 'transform 0.3s ease-in-out',
+                    '&:hover': {
+                      transform: 'scale(1.1)',
+                    },
+                  }}
+                />
                 <Typography variant="body1">contact@company.com</Typography>
               </Box>
             </Box>
@@ -101,6 +152,18 @@ export default function Contact() {
                 display: 'flex',
                 flexDirection: 'column',
                 gap: 2,
+                p: 4,
+                borderRadius: 2,
+                backgroundColor: (theme) =>
+                  theme.palette.mode === 'light'
+                    ? alpha(theme.palette.primary.main, 0.04)
+                    : alpha(theme.palette.primary.main, 0.1),
+                transition: 'all 0.3s ease-in-out',
+                '&:hover': {
+                  transform: 'translateY(-4px)',
+                  boxShadow: (theme) =>
+                    `0 12px 24px ${alpha(theme.palette.primary.main, 0.1)}`,
+                },
               }}
             >
               <TextField
@@ -108,6 +171,14 @@ export default function Contact() {
                 variant="outlined"
                 fullWidth
                 required
+                sx={{
+                  '& .MuiOutlinedInput-root': {
+                    transition: 'all 0.3s ease-in-out',
+                    '&:hover': {
+                      transform: 'translateY(-2px)',
+                    },
+                  },
+                }}
               />
               <TextField
                 label="Email"
@@ -115,12 +186,28 @@ export default function Contact() {
                 fullWidth
                 required
                 type="email"
+                sx={{
+                  '& .MuiOutlinedInput-root': {
+                    transition: 'all 0.3s ease-in-out',
+                    '&:hover': {
+                      transform: 'translateY(-2px)',
+                    },
+                  },
+                }}
               />
               <TextField
                 label="Subject"
                 variant="outlined"
                 fullWidth
                 required
+                sx={{
+                  '& .MuiOutlinedInput-root': {
+                    transition: 'all 0.3s ease-in-out',
+                    '&:hover': {
+                      transform: 'translateY(-2px)',
+                    },
+                  },
+                }}
               />
               <TextField
                 label="Message"
@@ -129,6 +216,14 @@ export default function Contact() {
                 required
                 multiline
                 rows={4}
+                sx={{
+                  '& .MuiOutlinedInput-root': {
+                    transition: 'all 0.3s ease-in-out',
+                    '&:hover': {
+                      transform: 'translateY(-2px)',
+                    },
+                  },
+                }}
               />
               <Button
                 variant="contained"
@@ -136,6 +231,12 @@ export default function Contact() {
                 size="large"
                 sx={{
                   alignSelf: 'flex-start',
+                  transition: 'all 0.3s ease-in-out',
+                  '&:hover': {
+                    transform: 'translateY(-2px)',
+                    boxShadow: (theme) =>
+                      `0 8px 16px ${alpha(theme.palette.primary.main, 0.2)}`,
+                  },
                 }}
               >
                 Send Message
