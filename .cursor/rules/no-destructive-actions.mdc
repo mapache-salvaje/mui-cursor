@@ -1,0 +1,69 @@
+ ---
+description: Rule to prevent destructive actions in the repository
+globs: ["*"]
+alwaysApply: true
+---
+
+# No Destructive Actions
+
+Rule to prevent any destructive actions that could harm the repository or its contents.
+
+<rule>
+name: no-destructive-actions
+description: Prevent destructive actions that could harm the repository
+filters:
+  - type: event
+    pattern: "file_delete|file_modify"
+  - type: command
+    pattern: "rm|git clean|git reset"
+
+actions:
+  - type: reject
+    conditions:
+      - pattern: "rm -rf .*"
+        message: "Rejecting bulk deletion of files. Never delete entire directories or all files."
+      - pattern: "git clean -fd"
+        message: "Rejecting git clean command. Never clean untracked files without explicit user approval."
+      - pattern: "git reset --hard"
+        message: "Rejecting hard reset. Never perform hard resets without explicit user approval."
+      - pattern: "rm -rf node_modules"
+        message: "Rejecting node_modules deletion. Use npm clean or yarn clean instead."
+      - pattern: "rm -rf .git"
+        message: "Rejecting git directory deletion. This would destroy the repository."
+
+  - type: suggest
+    message: |
+      When making changes to the repository:
+
+      1. Never delete files or directories without explicit user approval
+      2. Never use destructive git commands without explicit user approval
+      3. Always make targeted, specific changes
+      4. Keep backups of important files before making changes
+      5. Use safe alternatives to destructive commands
+      6. Document all changes made
+      7. Test changes in a safe environment first
+      8. Get explicit confirmation for any potentially destructive actions
+
+       Safe alternatives:
+      - Instead of rm -rf: Use specific file deletion with confirmation
+      - Instead of git clean: Use git status to review changes first
+      - Instead of git reset --hard: Use git reset --soft or git checkout
+      - Instead of deleting node_modules: Use package manager clean commands
+
+examples:
+  - input: |
+      # Bad: Destructive commands
+      rm -rf .
+      git clean -fd
+      git reset --hard HEAD~3
+
+      # Good: Safe alternatives
+      git status  # Review changes first
+      git checkout -- specific-file  # Revert specific file
+      npm clean  # Clean npm cache safely
+    output: "Use safe alternatives to destructive commands"
+
+metadata:
+  priority: critical
+  version: 1.0
+</rule>

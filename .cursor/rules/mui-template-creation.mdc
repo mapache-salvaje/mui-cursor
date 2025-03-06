@@ -1,0 +1,158 @@
+---
+description: Standards for creating new Material UI templates
+globs: ["cursor-mui-templates/**/*"]
+alwaysApply: true
+---
+
+# MUI Template Creation Standards
+
+Standards for creating new Material UI templates that can be used with Cursor.
+
+<rule>
+name: mui-template-creation
+description: Standards for creating new Material UI templates
+filters:
+  - type: file_extension
+    pattern: "\\.(ts|tsx|js|md)$"
+  - type: event
+    pattern: "file_create"
+
+actions:
+  - type: suggest
+    message: |
+      When creating a new MUI template:
+
+      1. Directory Structure:
+         ```
+         cursor-mui-templates/
+         ├── template-name/
+         │   ├── components/     # Template-specific components
+         │   ├── shared-theme/   # Shared theme components (do not modify)
+         │   ├── README.md       # Template documentation
+         │   ├── Template.tsx    # TypeScript version
+         │   └── Template.js     # JavaScript version
+         ```
+
+      2. Template Component Structure:
+         ```tsx
+         // Template.tsx
+         import * as React from 'react';
+         import CssBaseline from '@mui/material/CssBaseline';
+         import AppTheme from '../shared-theme/AppTheme';
+         
+         interface TemplateProps {
+           mode: 'light' | 'dark';
+           onToggleColorMode: () => void;
+         }
+         
+         export default function Template({ mode, onToggleColorMode }: TemplateProps) {
+           return (
+             <AppTheme mode={mode}>
+               <CssBaseline enableColorScheme />
+               {/* Template content */}
+             </AppTheme>
+           );
+         }
+         ```
+
+      3. README.md Structure:
+         ```markdown
+         # Template Name
+         
+         Brief description of the template's purpose.
+         
+         ## Features
+         
+         - Key feature 1
+         - Key feature 2
+         - etc.
+         
+         ## Usage
+         
+         ```jsx
+         import Template from './template-name/Template';
+         
+         function App() {
+           const [mode, setMode] = React.useState('light');
+           const toggleColorMode = () => {
+             setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'));
+           };
+           
+           return <Template mode={mode} onToggleColorMode={toggleColorMode} />;
+         }
+         ```
+         
+         ## Props
+         
+         | Prop | Type | Description |
+         |------|------|-------------|
+         | mode | 'light' \| 'dark' | The current color mode |
+         | onToggleColorMode | () => void | Function to toggle between light and dark mode |
+         
+         ## Components
+         
+         List of main components included in the template.
+         
+         ## Customization
+         
+         Instructions for customizing the template.
+         ```
+
+      4. Component Guidelines:
+         - Keep components modular and reusable
+         - Use TypeScript for type safety
+         - Follow MUI's component patterns
+         - Include proper prop types
+         - Use consistent naming conventions
+         - Keep components focused and single-purpose
+
+      5. Theme Integration:
+         - Use AppTheme from shared-theme
+         - Pass mode and onToggleColorMode props
+         - Do not modify shared-theme files
+         - Use MUI's theme system for styling
+
+      6. Testing:
+         - Test with both light and dark modes
+         - Verify responsive design
+         - Check accessibility
+         - Test in different browsers
+         - Verify integration works
+
+      7. Integration Testing:
+         - Create test integration in integrations/
+         - Test with different project types
+         - Verify all dependencies work
+         - Check build process
+         - Test hot reloading
+
+      8. Important Notes:
+         - Never modify shared-theme files
+         - Keep both .tsx and .js versions in sync
+         - Document all props and customization options
+         - Follow MUI v6 best practices
+         - Use proper TypeScript types
+         - Keep components lightweight
+         - Follow accessibility guidelines
+
+examples:
+  - input: |
+      # Bad: Missing required files
+      template-name/
+      ├── Template.tsx
+      └── README.md
+
+      # Good: Complete template structure
+      template-name/
+      ├── components/
+      │   ├── Component1.tsx
+      │   └── Component2.tsx
+      ├── README.md
+      ├── Template.tsx
+      └── Template.js
+    output: "Follow the complete template structure with all required files"
+
+metadata:
+  priority: high
+  version: 1.0
+</rule>
