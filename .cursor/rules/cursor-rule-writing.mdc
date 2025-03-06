@@ -1,0 +1,148 @@
+---
+description: Standards for writing Cursor rules
+globs: [".cursor/rules/*.mdc"]
+alwaysApply: true
+---
+
+# Cursor Rule Writing Standards
+
+Standards for writing and maintaining Cursor rules.
+
+<rule>
+name: cursor-rule-writing
+description: Standards for writing Cursor rules
+filters:
+  - type: file_extension
+    pattern: "\\.mdc$"
+  - type: event
+    pattern: "file_create|file_modify"
+
+actions:
+  - type: suggest
+    message: |
+      When writing Cursor rules:
+
+      1. File Structure:
+         ```
+         .cursor/rules/
+         ├── rule-name.mdc
+         ```
+
+      2. Rule File Structure:
+         ```markdown
+         ---
+         description: Clear description of the rule's purpose
+         globs: ["file patterns to match"]
+         alwaysApply: true/false
+         ---
+
+         # Rule Name
+
+         Brief description of what the rule does.
+
+         <rule>
+         name: rule-name
+         description: Detailed description
+         filters:
+           - type: file_extension|content|event
+             pattern: "regex pattern"
+         actions:
+           - type: reject|suggest|execute
+             conditions:
+               - pattern: "regex pattern"
+             message: "Error message"
+         examples:
+           - input: "Example input"
+             output: "Expected output"
+         metadata:
+           priority: high|medium|low
+           version: "1.0"
+         </rule>
+         ```
+
+      3. Rule Writing Guidelines:
+         - Keep descriptions clear and concise
+         - Use proper markdown formatting
+         - Include relevant examples
+         - Test rules with different inputs
+         - Document all conditions and actions
+         - Use consistent naming conventions
+         - Keep rules focused and single-purpose
+
+      4. Rule Types:
+         - File extension rules
+         - Content pattern rules
+         - Event-based rules
+         - Project structure rules
+         - Code style rules
+
+      5. Action Types:
+         - reject: Block changes
+         - suggest: Provide guidance
+         - execute: Run commands
+         - validate: Check conditions
+
+      6. Testing:
+         - Test with valid inputs
+         - Test with invalid inputs
+         - Test edge cases
+         - Verify rule behavior
+         - Check error messages
+
+      7. Maintenance:
+         - Keep rules up to date
+         - Document changes
+         - Version control
+         - Review periodically
+         - Remove obsolete rules
+
+      8. Important Notes:
+         - Never modify rules directly
+         - Always provide rule content for manual review
+         - Follow established patterns
+         - Keep rules simple and focused
+         - Document all assumptions
+         - Consider edge cases
+         - Test thoroughly
+
+examples:
+  - input: |
+      # Bad: Missing required sections
+      ---
+      description: My rule
+      ---
+      # My Rule
+      <rule>
+      name: my-rule
+      </rule>
+
+      # Good: Complete rule structure
+      ---
+      description: Standards for my rule
+      globs: ["*.ts"]
+      alwaysApply: true
+      ---
+      # My Rule
+      Standards for my rule.
+      <rule>
+      name: my-rule
+      description: Detailed description
+      filters:
+        - type: file_extension
+          pattern: "\\.ts$"
+      actions:
+        - type: suggest
+          message: "Good example"
+      examples:
+        - input: "test.ts"
+          output: "Valid TypeScript file"
+      metadata:
+        priority: high
+        version: "1.0"
+      </rule>
+    output: "Follow the complete rule structure with all required sections"
+
+metadata:
+  priority: high
+  version: 1.0
+</rule>
