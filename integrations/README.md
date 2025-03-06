@@ -9,7 +9,6 @@ Each integration is contained in its own subdirectory with the following naming 
 
 Example:
 - `vite-mui-about/` - Vite integration of the About page template
-- `vite-mui-theme/` - Vite integration of the theme template
 
 ## Usage
 
