@@ -1,3 +1,9 @@
+---
+description: Standards for integrating MUI templates with Vite
+globs: ["*"]
+alwaysApply: true
+---
+
 # MUI Template Vite Integration Standards
 
 Standards for integrating MUI templates into Vite projects.

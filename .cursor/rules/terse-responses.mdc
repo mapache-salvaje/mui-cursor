@@ -1,0 +1,42 @@
+---
+description: Rule for enforcing terse, direct responses without unnecessary summaries
+globs: ["*"]
+alwaysApply: true
+---
+
+# Terse Responses
+
+Rule for ensuring responses are concise and direct.
+
+<rule>
+name: terse-responses
+description: Enforce terse, direct responses without unnecessary summaries
+filters:
+  - type: event
+    pattern: "response"
+actions:
+  - type: enforce
+    message: |
+      Keep responses terse:
+      1. No conversation history summaries
+      2. No lengthy explanations
+      3. Direct answers only
+      4. Skip obvious context
+      5. One line status updates
+
+examples:
+  - input: |
+      # Bad
+      Let me summarize our conversation so far...
+      First we did X, then Y, then Z...
+      Now I'll explain what I'm going to do...
+
+      # Good
+      Fixed Hero.tsx styling
+      Running dev server
+    output: "Keep it brief"
+
+metadata:
+  priority: critical
+  version: 1.0
+</rule>

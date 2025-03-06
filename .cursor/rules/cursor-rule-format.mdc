@@ -1,8 +1,9 @@
 ---
 description: Standards for formatting Cursor rule files
-globs: ["*.mdc"]
+globs: ["*"]
 alwaysApply: true
 ---
+
 # Cursor Rule Format
 
 Standards for formatting Cursor rule files to ensure consistency and proper functionality.
@@ -29,6 +30,8 @@ actions:
         message: "Frontmatter should not have extra spaces after dashes"
       - pattern: "\\n\\n\\n"
         message: "File should not contain more than two consecutive line breaks"
+      - pattern: "globs:\\s*\\[\"[^*]"
+        message: "Use simple glob ['*'] unless specifically required otherwise"
 
   - type: suggest
     message: |
@@ -38,14 +41,15 @@ actions:
          ```yaml
          ---
          description: Clear description of the rule's purpose
-         globs: ["file patterns to match"]
-         alwaysApply: false
+         globs: ["*"]  # Use simple glob unless specifically required otherwise
+         alwaysApply: true
          ---
          ```
          - No spaces after the dashes
          - Single line break after opening dash
          - Single line break before closing dash
          - All fields must be present
+         - Keep globs simple unless complex patterns are required
 
       2. Title and Description:
          ```markdown
@@ -82,51 +86,22 @@ actions:
          - All sections must be present
          - No trailing spaces
 
-      4. File Structure:
-         - No extra spaces at line ends
-         - No tabs, only spaces for indentation
-         - UTF-8 encoding
-         - Unix-style line endings (LF)
-         - No BOM marker
-
 examples:
   - input: |
       ---
       description: My rule
-      globs: ["*.ts"]
+      globs: ["*.ts", "*.tsx", "src/**/*.js"]
       alwaysApply: false
       ---
-      # My Rule
-      <rule>
-      name: my-rule
-      description: A well-formatted rule
-      filters:
-        - type: file_extension
-          pattern: "\\.ts$"
-      actions:
-        - type: suggest
-          message: "Good example"
-      </rule>
-    output: "Accepted: Properly formatted rule file"
+    output: "Rejected: Use simple glob ['*'] unless complex patterns required"
 
   - input: |
-      --- 
-      description: My rule
-      globs: ["*.ts"]
-      alwaysApply: false
       ---
-      # My Rule
-      <rule>
-      name: my-rule
-      description: A well-formatted rule
-      filters:
-        - type: file_extension
-          pattern: "\\.ts$"
-      actions:
-        - type: suggest
-          message: "Good example"
-      </rule>
-    output: "Rejected: Extra space after frontmatter dash"
+      description: My rule
+      globs: ["*"]
+      alwaysApply: true
+      ---
+    output: "Accepted: Simple glob pattern used"
 
 metadata:
   priority: high

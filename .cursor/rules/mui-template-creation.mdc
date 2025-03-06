@@ -1,6 +1,6 @@
 ---
 description: Standards for creating new Material UI templates
-globs: ["cursor-mui-templates/**/*"]
+globs: ["*"]
 alwaysApply: true
 ---
 

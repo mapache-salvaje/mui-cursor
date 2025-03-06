@@ -1,8 +1,9 @@
 ---
 description: Standards for setting up a React project with Material UI v6 and Vite
-globs: ["package.json", "src/**/*.{ts,tsx}", "tsconfig*.json", "vite.config.ts"]
+globs: ["*"]
 alwaysApply: true
 ---
+
 # MUI v6 + Vite Project Setup Standards
 
 Standards for setting up a React project with Material UI v6, TypeScript, and Vite.

@@ -6,39 +6,54 @@ alwaysApply: true
 
 # Reuse Existing Code
 
-Rule for ensuring we reuse existing code instead of creating new files from scratch.
+Rule for ensuring we reuse existing code instead of creating from scratch.
 
 <rule>
 name: reuse-existing-code
-description: Ensure we reuse existing code instead of creating from scratch
+description: Never generate code when existing code can be duplicated
 filters:
   - type: file_extension
-    pattern: "\\.(ts|tsx)$"
+    pattern: "\\.(ts|tsx|js|jsx)$"
   - type: event
-    pattern: "file_create"
+    pattern: "(file_create|file_modify)"
 actions:
-  - type: suggest
+  - type: enforce
     message: |
-      When creating new integrations or templates:
+      NEVER generate code when you can duplicate existing code:
 
-      1. First check if there are existing files that can be duplicated
-      2. Only create new files from scratch if no suitable existing files are found
-      3. When duplicating files:
-         - Maintain the same structure and patterns
-         - Update only the necessary parts (like imports, paths, etc.)
-         - Keep the core functionality intact
-      4. Document any modifications made to the duplicated files
+      1. ALWAYS search the codebase for existing implementations first
+      2. If similar functionality exists:
+         - Duplicate the existing files
+         - Maintain identical structure and patterns
+         - Only modify what's absolutely necessary (imports, paths, etc.)
+         - Preserve all core functionality and patterns
+      3. Only generate new code if:
+         - No similar implementation exists anywhere in the codebase
+         - The existing implementation is explicitly marked as deprecated
+         - You have explicit instructions to create a new implementation
+      4. When duplicating:
+         - Keep all existing patterns (naming, structure, organization)
+         - Maintain consistency with the source files
+         - Document any required modifications
+      5. For UI components:
+         - ALWAYS duplicate existing components with similar functionality
+         - Maintain consistent styling patterns and theme usage
+         - Preserve accessibility features and responsive behaviors
 
 examples:
   - input: |
-      # Bad: Creating from scratch
-      Creating new files without checking existing ones
+      # Bad
+      - Generating a new component from scratch
+      - Creating new styling patterns
+      - Implementing new UI behaviors
 
-      # Good: Reusing existing code
-      Duplicating and modifying existing files
-    output: "Always check for existing files to duplicate before creating new ones"
+      # Good
+      - Duplicating similar existing components
+      - Reusing established styling patterns
+      - Maintaining consistent behaviors
+    output: "NEVER write new code when you can duplicate existing code"
 
 metadata:
-  priority: high
-  version: 1.0
+  priority: critical
+  version: 2.0
 </rule>

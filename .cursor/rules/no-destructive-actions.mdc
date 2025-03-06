@@ -1,4 +1,4 @@
- ---
+---
 description: Rule to prevent destructive actions in the repository
 globs: ["*"]
 alwaysApply: true
