@@ -1,0 +1,64 @@
+---
+description: Rule for preventing assumptions about directory contents and project structure
+globs: ["*"]
+alwaysApply: true
+---
+
+# No Assumptions
+
+Rule for preventing assumptions about project structure and contents.
+
+<rule>
+name: no-assumptions
+description: NEVER make assumptions about directory contents or project structure without verification
+filters:
+  - type: event
+    pattern: "file_modify|file_create"
+  - type: file_extension
+    pattern: "\\.md$"
+
+actions:
+  - type: reject
+    conditions:
+      - pattern: "^(?!.*list_dir.*)"
+        message: "STOP: Directory contents must be verified before documenting"
+
+  - type: suggest
+    message: |
+      When documenting or modifying project structure:
+
+      1. ALWAYS verify first:
+         - Use list_dir to check directory contents
+         - Verify each subdirectory exists
+         - Only document what you can see
+         - If unsure, check parent directory
+
+      2. NEVER assume:
+         - Don't guess directory contents
+         - Don't copy from other projects
+         - Don't document what you think should be there
+         - Don't make up folder structures
+
+      3. If you made a mistake:
+         - Correct it immediately
+         - Document the correction
+         - Explain what went wrong
+         - Learn from the mistake
+
+examples:
+  - input: |
+      # Bad: Making assumptions
+      "This directory contains X, Y, Z..."
+      "The project has these components..."
+      "There are templates for..."
+
+      # Good: Verified contents
+      "After running list_dir on /path:
+      - file1.ts
+      - file2.ts"
+    output: "Only document what you can verify exists"
+
+metadata:
+  priority: critical
+  version: 1.0
+</rule>
