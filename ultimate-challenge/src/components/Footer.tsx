@@ -55,10 +55,9 @@ export default function Footer() {
       sx={{
         display: 'flex',
         flexDirection: 'column',
-        alignItems: 'center',
+        alignItems: 'flex-start',
         gap: { xs: 4, sm: 8 },
         py: { xs: 8, sm: 10 },
-        textAlign: { sm: 'center', md: 'left' },
       }}
     >
       <Box
@@ -83,25 +82,34 @@ export default function Footer() {
             <Typography component="h2" variant="body2" fontWeight="bold">
               {title}
             </Typography>
-            <Stack spacing={1}>
+            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
               {items.map(({ title: itemTitle, href }) => (
-                <NextLink key={itemTitle} href={href} passHref style={{ textDecoration: 'none' }}>
-                  <Button
-                    component="a"
-                    variant="text"
-                    size="small"
-                    sx={{
-                      color: 'text.secondary',
-                      justifyContent: { sm: 'center', md: 'flex-start' },
-                      minWidth: 'unset',
-                      p: 0,
-                    }}
-                  >
-                    {itemTitle}
-                  </Button>
-                </NextLink>
+                <Button
+                  key={itemTitle}
+                  component={NextLink}
+                  href={href}
+                  variant="text"
+                  size="small"
+                  sx={{
+                    color: 'text.secondary',
+                    textTransform: 'none',
+                    fontSize: '0.875rem',
+                    fontWeight: 400,
+                    '&:hover': {
+                      color: 'primary.main',
+                      backgroundColor: 'transparent',
+                    },
+                    minWidth: 'unset',
+                    p: 0,
+                    height: 'auto',
+                    lineHeight: 1.5,
+                    justifyContent: 'flex-start',
+                  }}
+                >
+                  {itemTitle}
+                </Button>
               ))}
-            </Stack>
+            </Box>
           </Box>
         ))}
       </Box>
@@ -111,7 +119,7 @@ export default function Footer() {
           flexDirection: { xs: 'column', sm: 'row' },
           width: '100%',
           justifyContent: 'space-between',
-          alignItems: 'center',
+          alignItems: 'flex-start',
           gap: { xs: 2, sm: 0 },
         }}
       >
