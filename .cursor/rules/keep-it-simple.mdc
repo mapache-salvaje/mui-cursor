@@ -1,0 +1,48 @@
+---
+description: Keep solutions simple and avoid overcomplicating things
+globs: ["*"]
+alwaysApply: true
+---
+
+# Keep It Simple
+
+Rule for ensuring solutions are simple and straightforward.
+
+<rule>
+name: keep-it-simple
+description: Always choose the simplest solution that works
+filters:
+  - type: event
+    pattern: "file_modify|file_create"
+
+actions:
+  - type: suggest
+    message: |
+      When solving problems:
+
+      1. Start with the simplest solution
+      2. Only add complexity if absolutely necessary
+      3. If you find yourself overcomplicating:
+         - Stop
+         - Take a step back
+         - Find the simplest way
+      4. One change at a time
+      5. No unnecessary refactoring
+
+examples:
+  - input: |
+      # Bad: Overcomplicated
+      Complex solution with multiple layers
+      Multiple unrelated changes
+      Unnecessary abstractions
+
+      # Good: Simple
+      Direct fix
+      Single focused change
+      Clear and obvious solution
+    output: "Choose the simplest solution that works"
+
+metadata:
+  priority: high
+  version: 1.0
+</rule>
