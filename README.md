@@ -4,22 +4,27 @@ Experiments and templates for integrating Material UI with Cursor IDE, focusing 
 
 ## Project Structure
 
-- `/.cursor/rules/` - Cursor IDE rules for consistent development practices
-- `/cursor-mui-templates/` - Base templates for MUI projects
-- `/integrations/` - Working examples of MUI templates integrated with different frameworks
-  - `cursor-mui-next-about/` - About page template with Next.js
-  - `cursor-mui-next-pricing/` - Pricing page template with Next.js
+- `/.cursor/rules/` - Cursor IDE rules for consistent development practices and standards
+- `/cursor-mui-templates/` - Cursor-built templates for MUI projects
+  - `/about/` - About page template
+  - `/pricing/` - Pricing page template
+- `/integrations/` - Cursor-built examples of MUI templates integrated with Next.js and Vite
+  - `/cursor-mui-next-about/` - About page template with Next.js
+  - `/cursor-mui-next-pricing/` - Pricing page template with Next.js
+  - `/cursor-mui-vite-about/` - About page template with Vite
+  - `/cursor-mui-vite-pricing/` - Pricing page template with Vite
 - `/mui-docs-templates/` - Original MUI documentation templates (read-only reference)
-- `/mui-vite-ts/` - Base setup for MUI with Vite and TypeScript
-- `/ultimate-challenge/` - Comprehensive Next.js application combining all MUI templates
+- `/scaffolds/` - Base project setups
+  - `/mui-vite-ts/` - Base setup for MUI with Vite and TypeScript
 
 ## Development Guidelines
 
 1. Never modify files in `/mui-docs-templates/` - these are reference implementations
-2. Use proper `.gitignore` files in each Next.js project
+2. Use proper `.gitignore` files in each project
 3. Follow the established patterns in existing integrations
 4. Reuse components from base templates when possible
 5. Keep shared theme files synchronized across projects
+6. Follow all Cursor rules in `/.cursor/rules/`
 
 ## Getting Started
 
@@ -37,4 +42,7 @@ Each project directory contains its own README with specific setup instructions.
 - Material UI v6+
 - Next.js 15.2+ (for Next.js integrations)
 - Vite 5+ (for Vite integrations)
-- TypeScript 5+ 
+- TypeScript 5+
+- Emotion (for styling)
+- ESLint (for code quality)
+- Prettier (for code formatting) 
