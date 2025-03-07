@@ -1,0 +1,63 @@
+---
+description: Prevent any modifications to the mui-docs-templates directory
+globs: ["*"]
+alwaysApply: true
+---
+
+# No Template Modifications
+
+Rule to prevent any modifications to the mui-docs-templates directory.
+
+<rule>
+name: no-template-modifications
+description: NEVER modify the mui-docs-templates directory or its contents
+filters:
+  - type: file_extension
+    pattern: ".*"
+  - type: event
+    pattern: "file_create|file_modify|file_delete"
+
+actions:
+  - type: reject
+    conditions:
+      - pattern: "^mui-docs-templates/.*$"
+        message: "STOP: The mui-docs-templates directory is READ-ONLY. Never modify, delete, or add files to this directory."
+
+  - type: suggest
+    message: |
+      The mui-docs-templates directory is READ-ONLY:
+
+      1. NEVER modify any files in mui-docs-templates
+      2. NEVER delete any files from mui-docs-templates
+      3. NEVER add new files to mui-docs-templates
+      4. ONLY copy files FROM mui-docs-templates TO your project
+      5. ALL changes must be made in your project directory
+      6. Templates are reference implementations only
+
+      Instead of modifying templates:
+      - Copy needed files to your project
+      - Make all modifications in your project
+      - Keep original templates intact for reference
+
+examples:
+  - input: |
+      # WRONG - Modifying template
+      edit mui-docs-templates/marketing-page/components/Hero.tsx
+      
+      # WRONG - Deleting template file
+      rm mui-docs-templates/blog/components/Latest.tsx
+      
+      # WRONG - Adding to templates
+      cp my-component.tsx mui-docs-templates/dashboard/components/
+      
+      # CORRECT - Copy to project
+      cp mui-docs-templates/marketing-page/components/Hero.tsx my-project/src/components/
+      
+      # CORRECT - Modify in project
+      edit my-project/src/components/Hero.tsx
+    output: "Only copy FROM templates, never modify templates"
+
+metadata:
+  priority: critical
+  version: 1.0
+</rule>
