@@ -85,35 +85,65 @@ actions:
          - Use consistent naming conventions
          - Keep rules focused and single-purpose
          - NEVER omit frontmatter when proposing rule content
+         - ALWAYS include detailed implementation examples
+         - NEVER remove concrete code examples in favor of general guidelines
+         - Show both good and bad examples for each pattern
+         - Include complete, working code snippets
+         - Demonstrate real-world usage patterns
 
-      4. Rule Types:
+      4. Implementation Examples:
+         - MUST include complete, working code examples
+         - MUST show both correct and incorrect implementations
+         - MUST demonstrate real-world usage patterns
+         - MUST include all necessary imports and dependencies
+         - MUST show proper error handling
+         - MUST demonstrate edge cases
+         - MUST include comments explaining key concepts
+         - MUST show proper TypeScript types
+         - MUST demonstrate proper testing patterns
+         - MUST include performance considerations
+
+      5. Rule Types:
          - File extension rules
          - Content pattern rules
          - Event-based rules
          - Project structure rules
          - Code style rules
+         - Implementation pattern rules
+         - Best practice rules
+         - Architecture rules
 
-      5. Action Types:
+      6. Action Types:
          - reject: Block changes
          - suggest: Provide guidance
          - execute: Run commands
          - validate: Check conditions
 
-      6. Testing:
+      7. Testing:
          - Test with valid inputs
          - Test with invalid inputs
          - Test edge cases
          - Verify rule behavior
          - Check error messages
+         - Validate code examples
+         - Test implementation patterns
+         - Verify TypeScript types
+         - Check performance impact
+         - Test accessibility
 
-      7. Maintenance:
+      8. Maintenance:
          - Keep rules up to date
          - Document changes
          - Version control
          - Review periodically
          - Remove obsolete rules
+         - Update implementation examples
+         - Verify code examples still work
+         - Check for breaking changes
+         - Update TypeScript types
+         - Review performance impact
 
-      8. Important Notes:
+      9. Important Notes:
          - NEVER write directly to .mdc files
          - ALWAYS include frontmatter in rule proposals
          - Follow established patterns
@@ -121,39 +151,72 @@ actions:
          - Document all assumptions
          - Consider edge cases
          - Test thoroughly
+         - ALWAYS include implementation examples
+         - NEVER remove concrete code examples
+         - Show real-world usage patterns
+         - Include complete working code
+         - Demonstrate proper error handling
+         - Show performance considerations
 
-      9. Creating Rules for Users:
-         - Create rule files in .cursor/rules/ directory
-         - Use proper file naming (kebab-case)
-         - Include complete frontmatter
-         - Follow the standard rule structure
-         - Provide clear examples
-         - Test the rule before committing
-         - Use conventional commits for rule changes
-         - NEVER commit changes until after user has reviewed and copied the content
+      10. Creating Rules for Users:
+          - Create rule files in .cursor/rules/ directory
+          - Use proper file naming (kebab-case)
+          - Include complete frontmatter
+          - Follow the standard rule structure
+          - Provide clear examples
+          - Use conventional commits for rule changes
+          - NEVER commit changes until after user has reviewed and copied the content
+          - ALWAYS include implementation examples
+          - Show both good and bad patterns
+          - Include complete working code
+          - Demonstrate real-world usage
+          - Show proper error handling
+          - Include performance considerations
 
 examples:
   - input: |
-      # Bad: Missing or incomplete frontmatter
-      # Rule Name
-      <rule>
-      name: my-rule
-      </rule>
+      # Bad: Missing implementation examples
+      When writing components:
+      - Use functional components
+      - Follow best practices
+      - Handle errors properly
 
-      # Bad: Extra spaces in frontmatter
-      ---  
-      description: My rule
-      globs: ["*"]
-      alwaysApply: true
-      ---  
+      # Bad: General guidelines without concrete examples
+      Component structure:
+      - Keep components small
+      - Use proper naming
+      - Follow patterns
 
-      # Good: Complete and properly formatted
-      ---
-      description: My rule
-      globs: ["*"]
-      alwaysApply: true
-      ---
-    output: "Always include properly formatted frontmatter"
+      # Good: Detailed implementation examples
+      Component structure:
+      ```tsx
+      // Bad: Missing error handling
+      export function Component() {
+        return <div>Content</div>;
+      }
+
+      // Good: Proper error handling and types
+      interface ComponentProps {
+        data: DataType;
+        onError: (error: Error) => void;
+      }
+
+      export function Component({ data, onError }: ComponentProps) {
+        try {
+          return (
+            <div>
+              {data.map(item => (
+                <Item key={item.id} {...item} />
+              ))}
+            </div>
+          );
+        } catch (error) {
+          onError(error as Error);
+          return <ErrorFallback />;
+        }
+      }
+      ```
+    output: "Always include detailed implementation examples with both good and bad patterns"
 
 metadata:
   priority: critical

@@ -1,16 +1,16 @@
 ---
-description: Standards for building sophisticated Material UI Next.js applications matching the ultimate challenge template
-globs: ["*"]
+description: Standards for building sophisticated Material UI Next.js applications
+globs: ["*.tsx", "*.ts"]
 alwaysApply: true
 ---
 
-# MUI Next.js Ultimate Challenge Standards
+# MUI NextJS Ultimate Standards
 
-Standards for building sophisticated Material UI Next.js applications matching the ultimate challenge template.
+Standards for building sophisticated Material UI NextJS applications with best practices and modern features.
 
 <rule>
 name: mui-nextjs-ultimate
-description: Build sophisticated Material UI Next.js applications with advanced features and modern UX
+description: Standards for building sophisticated Material UI NextJS applications
 filters:
   - type: file_extension
     pattern: "\\.(ts|tsx)$"
@@ -18,42 +18,50 @@ filters:
     pattern: "file_create|file_modify"
 
 actions:
-  - type: enforce
+  - type: suggest
     message: |
-      When building a sophisticated MUI Next.js application:
+      When building MUI NextJS applications:
 
       1. Project Structure:
          ```
          src/
-         ├── app/
-         │   ├── layout.tsx           # Root layout with metadata
-         │   ├── page.tsx             # Landing page
-         │   ├── root-client-layout.tsx # Client-side root with theme setup
-         │   └── dashboard/           # Dashboard module
-         │       ├── page.tsx         # Dashboard page
-         │       ├── components/      # Dashboard-specific components
-         │       └── lib/            # Dashboard utilities
-         ├── components/              # Shared components
-         │   ├── NavigationBar.tsx    # Main navigation
-         │   ├── Footer.tsx          # Site footer
-         │   └── shared/             # Reusable components
-         └── shared-theme/           # Theme configuration
-             ├── AppTheme.tsx        # Theme provider
-             ├── ColorModeIconDropdown.tsx
-             └── customizations/     # Theme customizations
+         ├── app/                    # Next.js app directory
+         │   ├── (auth)/            # Auth group routes
+         │   ├── (dashboard)/       # Dashboard group routes
+         │   └── (marketing)/       # Marketing group routes
+         ├── components/            # React components
+         │   ├── shared/           # Shared components
+         │   ├── about/            # About page components
+         │   ├── blog/             # Blog page components
+         │   ├── checkout/         # Checkout page components
+         │   └── dashboard/        # Dashboard components
+         ├── hooks/                # Custom React hooks
+         ├── lib/                  # Utility functions
+         ├── providers/            # Context providers
+         ├── styles/               # Global styles
+         └── types/                # TypeScript types
+         ```
 
-      2. Required Features:
-         - Dark/light mode toggle with theme persistence
-         - Responsive navigation with mobile menu
-         - Dashboard with data grid and charts
-         - Tree view navigation
-         - Card-based layout with hover effects
-         - Loading states and transitions
-         - Error boundaries and fallbacks
-         - SEO optimization with metadata
-         - Modern micro-interactions
+      2. Component Organization:
+         - Each page folder contains ONLY components used on that page
+         - Shared components go in shared/ directory
+         - Keep folder names lowercase and kebab-case
+         - Group related components in subfolders
+         - Maintain consistent file naming
 
-      3. Component Guidelines:
+      3. Required Features:
+         - TypeScript support
+         - ESLint configuration
+         - Prettier formatting
+         - Husky pre-commit hooks
+         - Conventional commits
+         - Responsive design
+         - Dark mode support
+         - Accessibility compliance
+         - Performance optimization
+         - SEO best practices
+
+      4. Component Guidelines:
          ```tsx
          // Base component structure with animations
          export default function Component() {
@@ -82,7 +90,7 @@ actions:
          }
          ```
 
-      4. Navigation Requirements:
+      5. Navigation Requirements:
          ```tsx
          const StyledToolbar = styled(Toolbar)(({ theme }) => ({
            display: 'flex',
@@ -97,17 +105,18 @@ actions:
          }));
          ```
 
-      5. Dashboard Features:
-         - Data grid with sorting and filtering
-         - Interactive charts and graphs
-         - Tree view navigation
-         - Card-based statistics
-         - Activity timeline
-         - User profile section
-         - Settings panel
+      6. Dashboard Features:
+         - Responsive layout
+         - Collapsible sidebar
+         - Quick actions
+         - Data visualization
          - Search functionality
+         - Filtering options
+         - Sorting capabilities
+         - Pagination support
+         - Export functionality
 
-      6. Animation Standards:
+      7. Animation Standards:
          ```tsx
          // Card hover effect
          sx={{
@@ -140,7 +149,7 @@ actions:
          }}
          ```
 
-      7. Theme Integration:
+      8. Theme Integration:
          - Use theme.palette for all colors
          - Implement dark/light mode
          - Use theme.spacing for layout
@@ -149,7 +158,7 @@ actions:
          - Use theme.shadows for elevation
          - Use theme.typography for text styles
 
-      8. Performance Requirements:
+      9. Performance Requirements:
          - Implement React.lazy for code splitting
          - Use Next.js Image component
          - Enable CSS layer optimization
@@ -158,17 +167,50 @@ actions:
          - Handle error boundaries
          - Monitor bundle size
 
-      9. Testing Requirements:
-         - Unit tests for utilities
-         - Component tests
-         - Integration tests
-         - Performance testing
-         - Accessibility testing
-         - Cross-browser testing
-         - Mobile responsiveness
+      10. Testing Requirements:
+          - Unit tests
+          - Integration tests
+          - E2E tests
+          - Accessibility tests
+          - Performance tests
+          - Visual regression tests
+          - Cross-browser testing
+          - Mobile testing
+
+      11. Refactoring Guidelines:
+          - Maintain existing patterns
+          - Update imports correctly
+          - Test after changes
+          - Document modifications
+          - Keep consistent styling
+          - Preserve functionality
+          - Update dependencies
+          - Clean up unused code
 
 examples:
   - input: |
+      # Bad: Inconsistent component organization
+      src/components/
+      ├── About/           # Wrong: Capitalized
+      ├── shared/          # Good: Lowercase
+      ├── BLOG/           # Wrong: All caps
+      └── Checkout/       # Wrong: Capitalized
+
+      # Bad: Mixed component locations
+      src/components/About/SharedButton.tsx  # Wrong: Shared in page folder
+      src/components/shared/AboutButton.tsx  # Wrong: Page-specific in shared
+
+      # Good: Proper organization
+      src/components/
+      ├── about/          # Good: Lowercase
+      ├── shared/         # Good: Lowercase
+      ├── blog/          # Good: Lowercase
+      └── checkout/      # Good: Lowercase
+
+      # Good: Correct component placement
+      src/components/shared/Button.tsx       # Good: Shared in shared folder
+      src/components/about/AboutHero.tsx     # Good: Page-specific in page folder
+
       # Bad: Static components without animations
       <Card>
         <CardContent>Static content</CardContent>
@@ -199,9 +241,9 @@ examples:
           </Typography>
         </CardContent>
       </Card>
-    output: "Use interactive components with sophisticated animations and theme integration"
+    output: "Follow consistent component organization patterns and use interactive components with sophisticated animations"
 
 metadata:
-  priority: high
-  version: 1.0
+  priority: critical
+  version: 2.0
 </rule>

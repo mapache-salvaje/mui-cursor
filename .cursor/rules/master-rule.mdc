@@ -1,0 +1,122 @@
+---
+description: Rule requiring reading all rules before completing any task
+globs: ["*"]
+alwaysApply: true
+---
+
+# Master Rule
+
+Rule requiring reading all rules before completing any task.
+
+<rule>
+name: master-rule
+description: ALWAYS read all rules before completing any task
+filters:
+  - type: event
+    pattern: "task_start"
+
+actions:
+  - type: enforce
+    message: |
+      Before completing ANY task:
+
+      1. Required Reading:
+         - Read ALL rules in .cursor/rules/
+         - Understand each rule's purpose
+         - Note rule priorities
+         - Identify conflicting rules
+         - Check rule dependencies
+         - Verify rule versions
+
+      2. Rule Categories to Check:
+         - Project structure rules
+         - Code style rules
+         - Implementation rules
+         - Testing rules
+         - Documentation rules
+         - Process rules
+         - Security rules
+         - Performance rules
+
+      3. Rule Application:
+         - Apply rules in priority order
+         - Handle rule conflicts
+         - Follow rule dependencies
+         - Maintain rule consistency
+         - Document rule decisions
+         - Test rule compliance
+
+      4. Rule Verification:
+         - Verify rule understanding
+         - Check rule applicability
+         - Validate rule compliance
+         - Test rule boundaries
+         - Document rule exceptions
+         - Review rule impact
+
+      5. Rule Documentation:
+         - Note which rules apply
+         - Document rule decisions
+         - Explain rule exceptions
+         - Record rule conflicts
+         - Track rule changes
+         - Update rule status
+
+      6. Rule Maintenance:
+         - Keep rules up to date
+         - Review rule effectiveness
+         - Update rule versions
+         - Remove obsolete rules
+         - Add missing rules
+         - Fix rule conflicts
+
+      7. Rule Communication:
+         - Explain rule choices
+         - Document rule rationale
+         - Share rule knowledge
+         - Train on rule usage
+         - Get rule feedback
+         - Update rule docs
+
+      8. Rule Enforcement:
+         - Apply rules consistently
+         - Monitor rule compliance
+         - Handle rule violations
+         - Document rule issues
+         - Suggest rule improvements
+         - Update rule enforcement
+
+      9. Important Notes:
+         - NEVER skip reading rules
+         - ALWAYS check rule updates
+         - NEVER ignore rule conflicts
+         - ALWAYS document rule decisions
+         - NEVER bypass rule checks
+         - ALWAYS verify rule compliance
+
+      10. Rule Integration:
+          - Connect related rules
+          - Build rule hierarchy
+          - Manage rule dependencies
+          - Handle rule overlaps
+          - Resolve rule conflicts
+          - Maintain rule consistency
+
+examples:
+  - input: |
+      # Bad: Starting task without reading rules
+      "Let me start implementing this feature..."
+      "I'll just write the code first..."
+      "Rules can wait until later..."
+
+      # Good: Following the master rule
+      "First, let me read all the rules..."
+      "I need to check rule priorities..."
+      "Let me verify rule compliance..."
+      "I'll document my rule decisions..."
+    output: "ALWAYS read and understand all rules before starting any task"
+
+metadata:
+  priority: critical
+  version: 1.0
+</rule>
