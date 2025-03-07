@@ -1,0 +1,153 @@
+---
+description: Standards for creating and maintaining Next.js scaffolds with Material UI
+globs: ["*"]
+alwaysApply: true
+---
+
+# Next.js Scaffold Process
+
+Standards for creating and maintaining Next.js scaffolds with Material UI.
+
+<rule>
+name: nextjs-scaffold-process
+description: Standards for creating and maintaining Next.js scaffolds with Material UI
+filters:
+  - type: file_extension
+    pattern: "\\.(ts|tsx|json)$"
+  - type: event
+    pattern: "file_create|file_modify"
+
+actions:
+  - type: enforce
+    message: |
+      When creating or modifying a Next.js scaffold:
+
+      1. Directory Structure (REQUIRED):
+         ```
+         scaffolds/mui-next-ts/
+         ├── src/
+         │   ├── app/
+         │   │   ├── layout.tsx           # Root layout with metadata
+         │   │   ├── page.tsx             # Main page component
+         │   │   └── root-client-layout.tsx # Client-side root with theme setup
+         │   ├── components/              # React components
+         │   │   ├── Dashboard.tsx        # Dashboard component
+         │   │   └── Layout.tsx           # Layout component with navigation
+         │   └── theme.ts                 # Material UI theme configuration
+         ├── package.json                 # Dependencies and scripts
+         ├── tsconfig.json                # TypeScript configuration
+         └── .gitignore                   # Git ignore rules
+         ```
+
+      2. Client Component Requirements:
+         - ALL components using MUI MUST be marked as client components
+         - Add 'use client' directive at the top of these files:
+           - Any component using styled from @mui/material/styles
+           - Any component using theme or useTheme
+           - Any component using MUI hooks
+           - Any component using MUI components with client-side features
+
+      3. Theme Setup (REQUIRED):
+         ```tsx
+         // root-client-layout.tsx
+         'use client';
+         
+         import * as React from 'react';
+         import { AppRouterCacheProvider } from '@mui/material-nextjs/v14-appRouter';
+         import CssBaseline from '@mui/material/CssBaseline';
+         import AppTheme from '../shared-theme/AppTheme';
+
+         export function RootClientLayout({ children }: { children: React.ReactNode }) {
+           const [mode, setMode] = React.useState<'light' | 'dark'>('light');
+
+           return (
+             <html lang="en">
+               <body>
+                 <AppRouterCacheProvider options={{ enableCssLayer: true }}>
+                   <AppTheme mode={mode}>
+                     <CssBaseline enableColorScheme />
+                     {children}
+                   </AppTheme>
+                 </AppRouterCacheProvider>
+               </body>
+             </html>
+           );
+         }
+         ```
+
+      4. Dependencies (REQUIRED):
+         ```json
+         {
+           "dependencies": {
+             "@emotion/react": "^11.11.3",
+             "@emotion/styled": "^11.11.0",
+             "@mui/icons-material": "^6.4.7",
+             "@mui/material": "^6.4.7",
+             "@mui/material-nextjs": "^6.0.0-alpha.4",
+             "next": "15.2.0",
+             "react": "19.0.0",
+             "react-dom": "19.0.0"
+           },
+           "devDependencies": {
+             "@types/node": "^20.11.19",
+             "@types/react": "19.0.0",
+             "@types/react-dom": "19.0.0",
+             "eslint": "^8.56.0",
+             "eslint-config-next": "15.2.0",
+             "typescript": "^5.3.3"
+           }
+         }
+         ```
+
+      5. Testing Steps (REQUIRED):
+         1. Install dependencies
+         2. Start dev server
+         3. Verify no client component errors
+         4. Test theme switching
+         5. Check responsive design
+         6. Verify navigation works
+         7. Test all interactive components
+         8. Check for hydration warnings
+         9. Verify build process
+         10. Test production build
+
+      6. Common Issues to Prevent:
+         - Missing 'use client' directives
+         - Incorrect theme setup
+         - Server components using client features
+         - Mismatched dependency versions
+         - Incorrect file structure
+         - Missing required components
+         - Improper hydration setup
+
+      7. Verification Process:
+         1. Check all MUI components have 'use client'
+         2. Verify theme provider setup
+         3. Test all interactive features
+         4. Check for hydration warnings
+         5. Verify build process
+         6. Test production deployment
+
+examples:
+  - input: |
+      # Bad: Missing client directive
+      import { styled } from '@mui/material/styles';
+      
+      const StyledComponent = styled('div')({
+        // styles
+      });
+
+      # Good: With client directive
+      'use client';
+      
+      import { styled } from '@mui/material/styles';
+      
+      const StyledComponent = styled('div')({
+        // styles
+      });
+    output: "Always add 'use client' directive to components using MUI features"
+
+metadata:
+  priority: critical
+  version: 1.0
+</rule>

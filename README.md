@@ -9,7 +9,8 @@ A collection of Material UI templates and integrations for Next.js and Vite.
 - `/integrations/` - Cursor-built MUI templates integrated with Next.js and Vite
 - `/mui-docs-templates/` - Read-only reference templates from MUI docs
 - `/scaffolds/` - Cursor-built project scaffolds
-  - `/mui-vite-ts/` - Base setup with Vite and TypeScript
+  - `/mui-next-ts/` - Next.js scaffold with TypeScript and MUI v6
+  - `/mui-vite-ts/` - Vite scaffold with TypeScript and MUI v6
 - `/complete-template-integrations/` - Complete template integrations
   - `/nextjs-full-site/` - Full Next.js site implementation
   - `/vite-full-site/` - Full Vite site implementation
