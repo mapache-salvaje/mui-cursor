@@ -6,9 +6,9 @@ A collection of Material UI templates and integrations for Next.js and Vite.
 
 - `/.cursor/rules/` - Cursor IDE rules for project standards and best practices
 - `/cursor-mui-templates/` - Cursor-built templates for various use cases
-- `/integrations/` - Examples of MUI templates integrated with Next.js and Vite
+- `/integrations/` - Cursor-built MUI templates integrated with Next.js and Vite
 - `/mui-docs-templates/` - Read-only reference templates from MUI docs
-- `/scaffolds/` - Base project scaffolds
+- `/scaffolds/` - Cursor-built project scaffolds
   - `/mui-vite-ts/` - Base setup with Vite and TypeScript
 - `/complete-template-integrations/` - Complete template integrations
   - `/nextjs-full-site/` - Full Next.js site implementation
