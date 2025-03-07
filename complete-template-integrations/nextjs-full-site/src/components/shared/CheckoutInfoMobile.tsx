@@ -19,7 +19,18 @@ export default function CheckoutInfoMobile({ step }: CheckoutInfoMobileProps) {
   };
 
   const DrawerList = (
-    <Box sx={{ width: 'auto', px: 3, pb: 3, pt: 8 }} role="presentation">
+    <Box 
+      sx={{ 
+        width: '100%', 
+        px: 3, 
+        pb: 3, 
+        pt: 8,
+        bgcolor: 'background.paper',
+        height: '100%',
+        overflow: 'auto'
+      }} 
+      role="presentation"
+    >
       <IconButton
         onClick={toggleDrawer(false)}
         sx={{ position: 'absolute', right: 8, top: 8 }}
@@ -36,6 +47,7 @@ export default function CheckoutInfoMobile({ step }: CheckoutInfoMobileProps) {
         variant="text"
         endIcon={<ExpandMoreRoundedIcon />}
         onClick={toggleDrawer(true)}
+        sx={{ mb: 2 }}
       >
         View details
       </Button>
@@ -48,6 +60,7 @@ export default function CheckoutInfoMobile({ step }: CheckoutInfoMobileProps) {
             top: 'var(--template-frame-height, 0px)',
             backgroundImage: 'none',
             backgroundColor: 'background.paper',
+            maxHeight: '80vh',
           },
         }}
       >
