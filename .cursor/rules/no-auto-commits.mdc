@@ -1,5 +1,5 @@
 ---
-description: Rule to prevent automatic commits without explicit user approval
+description: Rule for automatically committing changes using conventional commits format
 globs: ["*"]
 alwaysApply: true
 ---
@@ -28,29 +28,41 @@ actions:
       When making changes to the repository:
 
       1. NEVER commit or push changes automatically
-      2. ALWAYS wait for explicit user approval:
-         - "Please commit these changes"
-         - "You can commit now"
-         - "Commit and push this"
-      3. When user approves:
-         - Show proposed commit message first
-         - Wait for user confirmation
-         - Only then proceed with commit/push
+      2. ONLY commit/push when user explicitly commands:
+         - "commit it" -> commit only
+         - "push it" -> push only
+         - "commit and push" -> do both together
+      3. Follow commands exactly:
+         - If user requests both commit and push, do them together
+         - No extra confirmation steps between commit and push if both requested
+         - Don't break combined commands into separate steps
       4. If unsure:
-         - Ask if user wants to commit
-         - Wait for explicit confirmation
-      5. Keep changes uncommitted by default
+         - Ask if user wants to commit/push
+         - Wait for explicit command
+      5. Keep changes uncommitted until commanded
 
 examples:
   - input: |
       # Bad: Automatic commits
       git add . && git commit -m "feat: add new component" && git push
 
-      # Good: Wait for approval
-      "Here are the changes I made. Would you like me to commit them?"
-    output: "Never commit without explicit user approval"
+      # Bad: Breaking "commit and push" into steps
+      User: "commit and push it"
+      AI: *commits*
+      AI: "Should I push now?"
+
+      # Good: Following exact commands
+      User: "commit it"
+      AI: *only commits*
+
+      User: "push it"
+      AI: *only pushes*
+
+      User: "commit and push"
+      AI: *commits and pushes together*
+    output: "Follow user commands exactly, no automatic actions"
 
 metadata:
   priority: critical
-  version: 1.0
+  version: 2.0
 </rule>
