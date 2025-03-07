@@ -1,24 +1,26 @@
 ---
-description: Prevent installation or commands in wrong directories
+description: Rule for verifying directory before executing commands
 globs: ["*"]
 alwaysApply: true
 ---
 
 # Directory Verification
 
+Rule requiring verification of directory and contents before ANY command execution.
+
 <rule>
 name: verify-directory
 description: NEVER run ANY commands without verifying directory first
 filters:
   - type: command
-    pattern: "(npm|yarn|pnpm|cd|ls|rm|cp|mv)"
+    pattern: "(npm|yarn|pnpm|cd|ls|rm|cp|mv|git)"
   - type: event
     pattern: "file_create|file_modify"
 
 actions:
   - type: reject
     conditions:
-      - pattern: "^(npm|yarn|pnpm|cd|ls|rm|cp|mv) .*$"
+      - pattern: "^(npm|yarn|pnpm|cd|ls|rm|cp|mv|git) .*$"
         message: "STOP: Directory verification required"
 
   - type: suggest
