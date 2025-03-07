@@ -3,10 +3,11 @@ import Divider from '@mui/material/Divider';
 import Hero from '../components/marketing/Hero';
 import LogoCollection from '../components/marketing/LogoCollection';
 import Highlights from '../components/marketing/Highlights';
-import PricingTiers from '../components/pricing/PricingTiers';
+import Pricing from '../components/marketing/Pricing';
 import Features from '../components/marketing/Features';
 import Testimonials from '../components/marketing/Testimonials';
-import FAQ from '../components/shared/FAQ';
+import FAQ from '../components/marketing/FAQ';
+import Footer from '../components/shared/Footer';
 
 export default function Home() {
   return (
@@ -20,9 +21,11 @@ export default function Home() {
         <Divider />
         <Highlights />
         <Divider />
-        <PricingTiers />
+        <Pricing />
         <Divider />
         <FAQ />
+        <Divider />
+        <Footer />
       </div>
     </>
   );

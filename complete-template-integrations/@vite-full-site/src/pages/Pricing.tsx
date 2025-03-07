@@ -1,21 +1,17 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import Container from '@mui/material/Container';
-import Typography from '@mui/material/Typography';
+import Divider from '@mui/material/Divider';
+import PricingHero from '../components/pricing/PricingHero';
 import PricingTiers from '../components/pricing/PricingTiers';
 
 export default function Pricing() {
   return (
-    <Box sx={{ flexGrow: 1, py: 8 }}>
-      <Container maxWidth="lg">
-        <Typography variant="h2" align="center" gutterBottom>
-          Pricing
-        </Typography>
-        <Typography variant="h5" align="center" color="text.secondary" paragraph>
-          Choose the plan that's right for you
-        </Typography>
+    <Box component="main" sx={{ mt: { xs: 8, sm: 12 } }}>
+      <PricingHero />
+      <Box sx={{ py: { xs: 4, sm: 8 } }}>
         <PricingTiers />
-      </Container>
+      </Box>
+      <Divider />
     </Box>
   );
 } 

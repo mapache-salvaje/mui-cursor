@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
@@ -7,8 +7,6 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Link from '@mui/material/Link';
-import NavigationBar from '../components/shared/NavigationBar';
-import Footer from '../components/shared/Footer';
 
 const pressReleases = [
   {
@@ -16,17 +14,33 @@ const pressReleases = [
     date: 'March 15, 2024',
     image: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=800&q=80',
     description: 'Leading technology company secures $50M in Series B funding to accelerate growth and innovation.',
+    link: '/press/series-b-funding',
   },
-  // Add more press releases as needed
+  {
+    title: 'New Product Launch: Enterprise Suite',
+    date: 'March 1, 2024',
+    image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80',
+    description: 'Company launches new enterprise suite with advanced features for large organizations.',
+    link: '/press/enterprise-suite',
+  },
+  {
+    title: 'Partnership with Global Tech Leader',
+    date: 'February 15, 2024',
+    image: 'https://images.unsplash.com/photo-1552581234-26160f608093?auto=format&fit=crop&w=800&q=80',
+    description: 'Strategic partnership announced with leading technology provider to expand market reach.',
+    link: '/press/global-partnership',
+  },
 ];
 
-const Press = () => {
+export default function Press() {
   return (
     <Box>
-      <NavigationBar />
-      <Container maxWidth="lg" sx={{ mt: 8, mb: 8 }}>
-        <Typography variant="h2" component="h1" gutterBottom>
+      <Container maxWidth="lg" sx={{ py: { xs: 8, sm: 12 } }}>
+        <Typography variant="h1" gutterBottom>
           Press & Media
+        </Typography>
+        <Typography variant="body1" color="text.secondary" paragraph>
+          Stay up to date with our latest news, press releases, and media coverage.
         </Typography>
         <Grid container spacing={4}>
           {pressReleases.map((release, index) => (
@@ -34,7 +48,7 @@ const Press = () => {
               <Card>
                 <CardMedia
                   component="img"
-                  height="140"
+                  height="200"
                   image={release.image}
                   alt={release.title}
                 />
@@ -42,21 +56,21 @@ const Press = () => {
                   <Typography gutterBottom variant="h5" component="h2">
                     {release.title}
                   </Typography>
-                  <Typography variant="body2" color="text.secondary">
+                  <Typography variant="body2" color="text.secondary" gutterBottom>
                     {release.date}
                   </Typography>
-                  <Typography variant="body2" color="text.secondary">
+                  <Typography variant="body2" color="text.secondary" paragraph>
                     {release.description}
                   </Typography>
+                  <Link href={release.link} color="primary">
+                    Read more →
+                  </Link>
                 </CardContent>
               </Card>
             </Grid>
           ))}
         </Grid>
       </Container>
-      <Footer />
     </Box>
   );
-};
-
-export default Press; 
+} 

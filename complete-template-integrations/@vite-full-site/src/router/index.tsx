@@ -14,6 +14,9 @@ import SignInSide from '../pages/SignInSide';
 import SignUp from '../pages/SignUp';
 import Terms from '../pages/Terms';
 import Press from '../pages/Press';
+import SeriesBFunding from '../pages/press/series-b-funding';
+import EnterpriseSuite from '../pages/press/enterprise-suite';
+import GlobalPartnership from '../pages/press/global-partnership';
 
 export const router = createBrowserRouter([
   {
@@ -75,6 +78,18 @@ export const router = createBrowserRouter([
       {
         path: 'press',
         element: <Press />,
+      },
+      {
+        path: 'press/series-b-funding',
+        element: <SeriesBFunding />,
+      },
+      {
+        path: 'press/enterprise-suite',
+        element: <EnterpriseSuite />,
+      },
+      {
+        path: 'press/global-partnership',
+        element: <GlobalPartnership />,
       },
     ],
   },
