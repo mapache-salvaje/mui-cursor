@@ -1,0 +1,69 @@
+---
+description: Rule for maintaining a single git history at the root level
+globs: ["*"]
+alwaysApply: true
+---
+
+# Single Git History
+
+Rule for ensuring we maintain a single git history at the root level of the project.
+
+<rule>
+name: single-git-history
+description: Enforce a single git history at the root level
+filters:
+  - type: file_extension
+    pattern: "\\.git$"
+  - type: event
+    pattern: "file_create|file_modify"
+
+actions:
+  - type: reject
+    conditions:
+      - pattern: "^.+\\.git$"
+        message: "Nested git repositories are not allowed. Only the root directory should have a .git directory."
+
+  - type: suggest
+    message: |
+      When working with git in this project:
+
+      1. NEVER create nested git repositories
+      2. NEVER initialize git in subdirectories
+      3. NEVER clone repositories into this project
+      4. ALWAYS use the root git repository
+      5. If you find a nested .git directory:
+         - Remove it immediately
+         - Add any changes to the root repository
+         - Keep all git operations at the root level
+
+      6. For new integrations:
+         - Copy files directly into the project structure
+         - Add them to the root git repository
+         - Never bring in their git history
+
+      7. For submodules:
+         - Do not use git submodules
+         - Copy needed files directly
+         - Maintain single history
+
+examples:
+  - input: |
+      # Bad: Nested git repositories
+      project/
+      ├── .git/
+      └── integrations/
+          └── nextjs-full-site/
+              └── .git/  # Nested git - NOT ALLOWED
+
+      # Good: Single git repository
+      project/
+      ├── .git/  # Only one git repository at root
+      └── integrations/
+          └── nextjs-full-site/
+              └── (no .git directory)
+    output: "Maintain a single git history at the root level only"
+
+metadata:
+  priority: critical
+  version: 1.0
+</rule>
