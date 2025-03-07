@@ -14,6 +14,8 @@ A collection of Material UI templates and integrations for Next.js and Vite.
 - `/complete-template-integrations/` - Complete template integrations
   - `/nextjs-full-site/` - Full Next.js site implementation
   - `/vite-full-site/` - Full Vite site implementation
+- `/site-reproductions/` - Attempts to reproduce existing sites
+  - `/nextjs-org-next-mui-ts/` - [FAILED] Attempt to reproduce nextjs.org with MUI v6 and Next.js
 
 ## Development Guidelines
 
