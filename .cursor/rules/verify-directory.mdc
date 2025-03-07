@@ -1,5 +1,5 @@
 ---
-description: Prevent installation in wrong directories
+description: Prevent installation or commands in wrong directories
 globs: ["*"]
 alwaysApply: true
 ---
@@ -8,38 +8,80 @@ alwaysApply: true
 
 <rule>
 name: verify-directory
-description: Never install packages without verifying correct directory
+description: NEVER run ANY commands without verifying directory first
 filters:
   - type: command
-    pattern: "(npm|yarn|pnpm) (install|add|i)"
+    pattern: "(npm|yarn|pnpm|cd|ls|rm|cp|mv)"
   - type: event
     pattern: "file_create|file_modify"
+
 actions:
   - type: reject
     conditions:
-      - pattern: "^(npm|yarn|pnpm) .*$"
-        message: "STOP: Verify directory before package operations"
+      - pattern: "^(npm|yarn|pnpm|cd|ls|rm|cp|mv) .*$"
+        message: "STOP: Directory verification required"
+
   - type: suggest
     message: |
-      Before ANY package operations:
-      1. Run pwd to verify current directory
-      2. Check package.json exists in current directory
-      3. Verify directory structure matches project requirements
-      4. Confirm target directory contains correct source files
-      5. NEVER assume directory context from previous commands
+      MANDATORY DIRECTORY VERIFICATION:
+
+      1. ALWAYS verify directory BEFORE running ANY command:
+         ```bash
+         pwd  # MUST run this first
+         ls   # MUST verify contents
+         ```
+
+      2. NEVER assume you're in the right directory from previous commands
+         - Shell state can be reset
+         - Directory can change
+         - Previous commands may have failed
+
+      3. REQUIRED verification steps IN ORDER:
+         a. Run pwd to check current directory
+         b. Verify it matches the target directory EXACTLY
+         c. Run ls to confirm expected files exist
+         d. ONLY THEN run your intended command
+
+      4. If not in correct directory:
+         a. Use cd with FULL relative path
+         b. Verify new directory with pwd
+         c. Verify contents with ls
+         d. ONLY THEN proceed
+
+      5. NEVER chain commands with && until directory is verified:
+         BAD:  cd some/dir && npm install
+         GOOD: cd some/dir
+               pwd  # verify
+               ls   # verify
+               npm install
+
+      6. ALWAYS treat directory changes as dangerous operations:
+         - Directory context is critical
+         - Wrong directory can break things
+         - Verification is mandatory
+         - No exceptions
 
 examples:
   - input: |
-      # Bad: Blind installation
-      npm install dayjs
+      # WRONG - No verification
+      npm install
       
-      # Good: Directory verification
-      pwd
-      ls package.json
-      npm install dayjs
-    output: "Always verify directory before package operations"
+      # WRONG - Blind directory change
+      cd some/dir && npm install
+      
+      # CORRECT - Full verification
+      pwd  # /path/to/project
+      ls   # verify package.json exists
+      npm install
+      
+      # CORRECT - Directory change with verification
+      cd some/dir
+      pwd  # verify new location
+      ls   # verify contents
+      npm install
+    output: "Directory verification is MANDATORY before ANY command"
 
 metadata:
   priority: critical
-  version: 1.0
+  version: 2.0
 </rule>
