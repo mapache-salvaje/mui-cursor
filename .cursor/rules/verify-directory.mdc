@@ -1,0 +1,45 @@
+---
+description: Prevent installation in wrong directories
+globs: ["*"]
+alwaysApply: true
+---
+
+# Directory Verification
+
+<rule>
+name: verify-directory
+description: Never install packages without verifying correct directory
+filters:
+  - type: command
+    pattern: "(npm|yarn|pnpm) (install|add|i)"
+  - type: event
+    pattern: "file_create|file_modify"
+actions:
+  - type: reject
+    conditions:
+      - pattern: "^(npm|yarn|pnpm) .*$"
+        message: "STOP: Verify directory before package operations"
+  - type: suggest
+    message: |
+      Before ANY package operations:
+      1. Run pwd to verify current directory
+      2. Check package.json exists in current directory
+      3. Verify directory structure matches project requirements
+      4. Confirm target directory contains correct source files
+      5. NEVER assume directory context from previous commands
+
+examples:
+  - input: |
+      # Bad: Blind installation
+      npm install dayjs
+      
+      # Good: Directory verification
+      pwd
+      ls package.json
+      npm install dayjs
+    output: "Always verify directory before package operations"
+
+metadata:
+  priority: critical
+  version: 1.0
+</rule>
