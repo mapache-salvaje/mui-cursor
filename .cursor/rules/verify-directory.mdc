@@ -37,6 +37,7 @@ actions:
          - Shell state can be reset
          - Directory can change
          - Previous commands may have failed
+         - Each command runs in its own shell context
 
       3. REQUIRED verification steps IN ORDER:
          a. Run pwd to check current directory
@@ -63,6 +64,19 @@ actions:
          - Verification is mandatory
          - No exceptions
 
+      7. CRITICAL: Each command runs in its own shell context
+         - Directory changes don't persist between commands
+         - Each command needs its own directory verification
+         - Never assume previous commands changed directory
+         - Always verify directory before each command
+
+      8. COMMON MISTAKES TO AVOID:
+         - Running commands in wrong directory
+         - Assuming directory changes persist
+         - Not verifying after directory changes
+         - Chaining commands without verification
+         - Running npm commands in root instead of project dir
+
 examples:
   - input: |
       # WRONG - No verification
@@ -70,6 +84,10 @@ examples:
       
       # WRONG - Blind directory change
       cd some/dir && npm install
+      
+      # WRONG - Assuming directory change persists
+      cd some/dir
+      npm install  # Still in wrong directory!
       
       # CORRECT - Full verification
       pwd  # /path/to/project
