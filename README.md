@@ -5,6 +5,9 @@ A collection of Material UI templates and integrations for Next.js and Vite.
 ## Directory Structure
 
 - `/.cursor/rules/` - Cursor IDE rules for project standards and best practices
+- `/complete-template-integrations/` - Complete template integrations
+  - `/nextjs-full-site/` - Full Next.js site implementation
+  - `/vite-full-site/` - Full Vite site implementation
 - `/cursor-mui-templates/` - Cursor-built templates for various use cases
   - `/about/` - About page template
   - `/pricing/` - Pricing page template
@@ -25,9 +28,6 @@ A collection of Material UI templates and integrations for Next.js and Vite.
 - `/scaffolds/` - Cursor-built project scaffolds
   - `/mui-next-ts/` - Next.js scaffold with TypeScript and MUI v6
   - `/mui-vite-ts/` - Vite scaffold with TypeScript and MUI v6
-- `/complete-template-integrations/` - Complete template integrations
-  - `/nextjs-full-site/` - Full Next.js site implementation
-  - `/vite-full-site/` - Full Vite site implementation
 - `/site-reproductions/` - Attempts to reproduce existing sites
   - `/nextjs-org-next-mui-ts/` - [FAILED] Attempt to reproduce nextjs.org with MUI v6 and Next.js
 
