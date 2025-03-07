@@ -9,8 +9,8 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Link from '@mui/material/Link';
-import AppAppBar from '../../components/AppAppBar';
-import Footer from '../../components/Footer';
+import AppAppBar from '@/components/shared/AppAppBar';
+import Footer from '@/components/shared/Footer';
 
 const pressReleases = [
   {

@@ -12,8 +12,8 @@ import CardContent from '@mui/material/CardContent';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import PhoneIcon from '@mui/icons-material/Phone';
 import EmailIcon from '@mui/icons-material/Email';
-import AppAppBar from '../../components/AppAppBar';
-import Footer from '../../components/Footer';
+import AppAppBar from '@/components/shared/AppAppBar';
+import Footer from '@/components/shared/Footer';
 
 const contactInfo = [
   {

@@ -3,8 +3,8 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
-import Content from '../../components/Content';
-import SignInCard from '../../components/SignInCard';
+import Content from '@/components/auth/SignInCard';
+import SignInCard from '@/components/auth/SignInCard';
 
 export default function SignInSide() {
   return (

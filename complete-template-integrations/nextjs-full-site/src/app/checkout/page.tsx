@@ -14,13 +14,13 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import Stack from '@mui/material/Stack';
 import ChevronLeftRoundedIcon from '@mui/icons-material/ChevronLeftRounded';
 import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded';
-import AppAppBar from '../../components/AppAppBar';
-import Footer from '../../components/Footer';
-import AddressForm from './components/AddressForm';
-import Info from './components/Info';
-import InfoMobile from './components/InfoMobile';
-import PaymentForm from './components/PaymentForm';
-import Review from './components/Review';
+import AppAppBar from '@/components/shared/AppAppBar';
+import Footer from '@/components/shared/Footer';
+import AddressForm from '@/components/auth/AddressForm';
+import CheckoutInfo from '@/components/shared/CheckoutInfo';
+import CheckoutInfoMobile from '@/components/shared/CheckoutInfoMobile';
+import PaymentForm from '@/components/auth/PaymentForm';
+import Review from '@/components/shared/Review';
 
 const steps = ['Shipping address', 'Payment details', 'Review your order'];
 
@@ -73,8 +73,8 @@ export default function Checkout() {
             flexGrow: 1,
           }}
         >
-          {matches && <Info step={activeStep} />}
-          {!matches && <InfoMobile step={activeStep} />}
+          {matches && <CheckoutInfo step={activeStep} />}
+          {!matches && <CheckoutInfoMobile step={activeStep} />}
           <Box sx={{ maxWidth: 600, width: '100%' }}>
             <Stepper activeStep={activeStep} sx={{ mb: { xs: 3, sm: 4 } }}>
               {steps.map((label) => (

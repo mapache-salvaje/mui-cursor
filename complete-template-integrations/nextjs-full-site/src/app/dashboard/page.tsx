@@ -18,8 +18,8 @@ import { areaElementClasses } from '@mui/x-charts/LineChart';
 import { DataGridPro } from '@mui/x-data-grid-pro';
 import { RichTreeView } from '@mui/x-tree-view/RichTreeView';
 import { TreeViewBaseItem } from '@mui/x-tree-view/models';
-import AppAppBar from '../../components/AppAppBar';
-import Footer from '../../components/Footer';
+import AppAppBar from '@/components/shared/AppAppBar';
+import Footer from '@/components/shared/Footer';
 
 type StatCardProps = {
   title: string;

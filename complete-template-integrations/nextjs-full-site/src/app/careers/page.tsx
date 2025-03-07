@@ -8,8 +8,8 @@ import Grid from '@mui/material/Grid';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
-import AppAppBar from '../../components/AppAppBar';
-import Footer from '../../components/Footer';
+import AppAppBar from '@/components/shared/AppAppBar';
+import Footer from '@/components/shared/Footer';
 
 const jobOpenings = [
   {

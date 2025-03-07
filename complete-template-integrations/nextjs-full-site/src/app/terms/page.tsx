@@ -5,8 +5,8 @@ import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
-import AppAppBar from '../../components/AppAppBar';
-import Footer from '../../components/Footer';
+import AppAppBar from '@/components/shared/AppAppBar';
+import Footer from '@/components/shared/Footer';
 
 const sections = [
   {

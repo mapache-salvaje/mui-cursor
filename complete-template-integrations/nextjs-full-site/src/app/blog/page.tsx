@@ -1,26 +1,27 @@
 'use client';
 
 import * as React from 'react';
-import Box from '@mui/material/Box';
+import CssBaseline from '@mui/material/CssBaseline';
 import Container from '@mui/material/Container';
-import AppAppBar from '../../components/AppAppBar';
-import Latest from '../../components/Latest';
-import MainContent from '../../components/MainContent';
-import Footer from '../../components/Footer';
+import AppAppBar from '@/components/shared/AppAppBar';
+import MainContent from '@/components/Blog/MainContent';
+import Latest from '@/components/blog/Latest';
+import Footer from '@/components/shared/Footer';
 
 export default function Blog() {
   return (
-    <Box sx={{ bgcolor: 'background.default' }}>
+    <>
+      <CssBaseline enableColorScheme />
       <AppAppBar />
-      <Container>
-        <Box sx={{ py: { xs: 12, sm: 14, md: 16 } }}>
-          <MainContent />
-          <Box sx={{ mt: { xs: 8, sm: 10 } }}>
-            <Latest />
-          </Box>
-        </Box>
+      <Container
+        maxWidth="lg"
+        component="main"
+        sx={{ display: 'flex', flexDirection: 'column', my: 16, gap: 4 }}
+      >
+        <MainContent />
+        <Latest />
       </Container>
       <Footer />
-    </Box>
+    </>
   );
 }

@@ -106,4 +106,4 @@ export default function Hero() {
       </Container>
     </Box>
   );
-} 
+}

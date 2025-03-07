@@ -3,9 +3,9 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
-import AppAppBar from '../../components/AppAppBar';
-import Footer from '../../components/Footer';
-import SignUpForm from '../../components/SignUpForm';
+import AppAppBar from '@/components/shared/AppAppBar';
+import Footer from '@/components/shared/Footer';
+import SignUpForm from '@/components/auth/SignUpForm';
 
 export default function SignUp() {
   return (

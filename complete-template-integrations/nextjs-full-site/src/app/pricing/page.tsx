@@ -2,8 +2,8 @@
 
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import AppAppBar from '@/components/AppAppBar';
-import Footer from '@/components/Footer';
+import AppAppBar from '@/components/shared/AppAppBar';
+import Footer from '@/components/shared/Footer';
 import PricingHero from '@/components/Pricing/PricingHero';
 import PricingTiers from '@/components/Pricing/PricingTiers';
 
