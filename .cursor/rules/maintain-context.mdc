@@ -1,0 +1,69 @@
+# Maintain Context
+
+Rule for maintaining user-provided context in a dedicated directory.
+
+<rule>
+name: maintain-context
+description: Store and maintain user-provided context in .cursor/context directory
+filters:
+  - type: event
+    pattern: "file_create|file_modify"
+  - type: content
+    pattern: ".*"
+
+actions:
+  - type: enforce
+    message: |
+      When receiving user-provided context:
+
+      1. Directory Structure:
+         ```
+         .cursor/
+         ├── context/              # User-provided context
+         │   ├── images/          # Screenshots and visual references
+         │   ├── code/           # Code snippets and examples
+         │   └── requirements/   # Written requirements and specs
+         ```
+
+      2. Required Steps:
+         - Create .cursor/context if it doesn't exist
+         - Organize content by type in subdirectories
+         - Timestamp each addition
+         - Maintain version history
+         - Never delete without user approval
+
+      3. Context Types:
+         - Images: Screenshots, mockups, design references
+         - Code: Snippets, examples, reference implementations
+         - Requirements: Written specs, user stories, constraints
+         - Links: References to external resources
+         - History: Previous conversation context
+
+      4. File Naming:
+         - Use descriptive names
+         - Include timestamps
+         - Use appropriate extensions
+         - Follow format: type_description_YYYYMMDD_HHMMSS
+
+      5. Metadata Requirements:
+         - Original source
+         - Timestamp
+         - Context type
+         - Related components
+         - User instructions
+
+examples:
+  - input: |
+      # Bad: Not saving context
+      User shares screenshot
+      AI proceeds without saving
+
+      # Good: Maintaining context
+      User shares screenshot
+      AI saves to .cursor/context/images/homepage_reference_20240307_204500.png
+    output: "Save all user-provided context in appropriate directory"
+
+metadata:
+  priority: critical
+  version: 1.0
+</rule>
