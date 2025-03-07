@@ -5,7 +5,7 @@ import type {} from '@mui/x-date-pickers/themeAugmentation';
 import type {} from '@mui/x-charts/themeAugmentation';
 import type {} from '@mui/x-data-grid-pro/themeAugmentation';
 import type {} from '@mui/x-tree-view/themeAugmentation';
-import { alpha, useTheme, Theme } from '@mui/material/styles';
+import { alpha, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -15,9 +15,9 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import { SparkLineChart } from '@mui/x-charts/SparkLineChart';
 import { areaElementClasses } from '@mui/x-charts/LineChart';
-import { DataGridPro } from '@mui/x-data-grid-pro';
-import { RichTreeView } from '@mui/x-tree-view/RichTreeView';
-import { TreeViewBaseItem } from '@mui/x-tree-view/models';
+import { DataGrid } from '@mui/x-data-grid-pro';
+import { TreeView } from '@mui/x-tree-view/TreeView';
+import { TreeItem } from '@mui/x-tree-view/TreeItem';
 import AppAppBar from '../../components/AppAppBar';
 import Footer from '../../components/Footer';
 
@@ -208,140 +208,97 @@ const rows = [
   { id: 3, event: 'Login', status: 'Failed', timestamp: '2024-03-20 10:40:00' },
 ];
 
-const NAVIGATION_ITEMS: TreeViewBaseItem[] = [
-  {
-    id: '1',
-    label: 'Dashboard',
-    children: [
-      { id: '2', label: 'Analytics' },
-      { id: '3', label: 'Reports' },
-      { id: '4', label: 'Settings' },
-    ],
-  },
-  {
-    id: '5',
-    label: 'Users',
-    children: [
-      { id: '6', label: 'Management' },
-      { id: '7', label: 'Permissions' },
-    ],
-  },
-];
-
 export default function Dashboard() {
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        minHeight: '100vh',
-        bgcolor: 'background.default',
-      }}
-    >
+    <Box sx={{ display: 'flex', minHeight: '100vh' }}>
       <AppAppBar />
       <Box
         component="main"
-        sx={{
+        sx={(theme) => ({
           flexGrow: 1,
-          width: '100%',
-          px: { xs: 2, sm: 3, md: 4 },
-          pt: { xs: 10, sm: 11, md: 12 },
-          pb: 4,
-          overflow: 'hidden',
-        }}
+          backgroundColor: theme.vars
+            ? `rgba(${theme.vars.palette.background.defaultChannel} / 1)`
+            : alpha(theme.palette.background.default, 1),
+          overflow: 'auto',
+        })}
       >
-        <Box
+        <Stack
+          spacing={2}
           sx={{
-            maxWidth: 'lg',
-            mx: 'auto',
-            width: '100%',
+            alignItems: 'center',
+            mx: 3,
+            pb: 5,
+            mt: { xs: 8, md: 2 },
           }}
         >
-          <Typography component="h1" variant="h5" sx={{ mb: 3 }}>
-            Overview
-          </Typography>
-          <Grid container spacing={3} sx={{ mb: 4 }}>
-            {data.map((card, index) => (
-              <Grid item xs={12} sm={6} lg={3} key={index}>
-                <StatCard {...card} />
+          <Box sx={{ width: '100%', maxWidth: { sm: '100%', md: '1700px' } }}>
+            <Typography component="h2" variant="h6" sx={{ mb: 2 }}>
+              Overview
+            </Typography>
+            <Grid container spacing={2} sx={{ mb: 2 }}>
+              {data.map((card, index) => (
+                <Grid item xs={12} sm={6} lg={3} key={index}>
+                  <StatCard {...card} />
+                </Grid>
+              ))}
+              <Grid item xs={12} sm={6} lg={3}>
+                <HighlightedCard />
               </Grid>
-            ))}
-            <Grid item xs={12} sm={6} lg={3}>
-              <HighlightedCard />
             </Grid>
-          </Grid>
 
-          <Typography component="h2" variant="h5" sx={{ mb: 3 }}>
-            Details
-          </Typography>
-          <Grid container spacing={3}>
-            <Grid item xs={12} lg={9}>
-              <Card
-                variant="outlined"
-                sx={{
-                  height: '100%',
-                  display: 'flex',
-                  flexDirection: 'column',
-                }}
-              >
-                <CardContent sx={{ flex: 1, p: 0 }}>
-                  <DataGridPro
-                    rows={rows}
-                    columns={columns}
-                    initialState={{
-                      pagination: {
-                        paginationModel: { page: 0, pageSize: 5 },
-                      },
-                    }}
-                    pageSizeOptions={[5, 10]}
-                    checkboxSelection
-                    disableRowSelectionOnClick
-                    sx={{
-                      border: 'none',
-                      '& .MuiDataGrid-cell': {
-                        borderColor: 'divider',
-                      },
-                      '& .MuiDataGrid-columnHeaders': {
-                        borderColor: 'divider',
-                        bgcolor: 'background.default',
-                      },
-                    }}
-                  />
-                </CardContent>
-              </Card>
+            <Typography component="h2" variant="h6" sx={{ mb: 2 }}>
+              Details
+            </Typography>
+            <Grid container spacing={2}>
+              <Grid item xs={12} lg={9}>
+                <Card variant="outlined" sx={{ height: '100%' }}>
+                  <CardContent>
+                    <DataGrid
+                      rows={rows}
+                      columns={columns}
+                      initialState={{
+                        pagination: {
+                          paginationModel: { page: 0, pageSize: 5 },
+                        },
+                      }}
+                      pageSizeOptions={[5, 10]}
+                      checkboxSelection
+                      disableRowSelectionOnClick
+                      autoHeight
+                    />
+                  </CardContent>
+                </Card>
+              </Grid>
+              <Grid item xs={12} lg={3}>
+                <Stack spacing={2}>
+                  <Card variant="outlined">
+                    <CardContent>
+                      <Typography variant="subtitle2" gutterBottom>
+                        Navigation
+                      </Typography>
+                      <TreeView
+                        aria-label="file system navigator"
+                        defaultCollapseIcon="📂"
+                        defaultExpandIcon="📁"
+                        sx={{ flexGrow: 1, maxWidth: 400, overflowY: 'auto' }}
+                      >
+                        <TreeItem nodeId="1" label="Dashboard">
+                          <TreeItem nodeId="2" label="Overview" />
+                          <TreeItem nodeId="3" label="Analytics" />
+                          <TreeItem nodeId="4" label="Reports" />
+                        </TreeItem>
+                        <TreeItem nodeId="5" label="Users">
+                          <TreeItem nodeId="6" label="List" />
+                          <TreeItem nodeId="7" label="Settings" />
+                        </TreeItem>
+                      </TreeView>
+                    </CardContent>
+                  </Card>
+                </Stack>
+              </Grid>
             </Grid>
-            <Grid item xs={12} lg={3}>
-              <Card
-                variant="outlined"
-                sx={{
-                  height: '100%',
-                  display: 'flex',
-                  flexDirection: 'column',
-                }}
-              >
-                <CardContent>
-                  <Typography variant="subtitle1" gutterBottom>
-                    Navigation
-                  </Typography>
-                  <RichTreeView
-                    items={NAVIGATION_ITEMS}
-                    aria-label="Navigation tree"
-                    defaultExpandedItems={['1']}
-                    sx={{
-                      flexGrow: 1,
-                      overflowY: 'auto',
-                      maxHeight: 300,
-                      '& .MuiTreeItem-content': {
-                        py: 1,
-                        borderRadius: 1,
-                      },
-                    }}
-                  />
-                </CardContent>
-              </Card>
-            </Grid>
-          </Grid>
-        </Box>
+          </Box>
+        </Stack>
       </Box>
       <Footer />
     </Box>
