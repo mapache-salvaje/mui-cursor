@@ -1,0 +1,67 @@
+---
+description: Rule to prevent creating any files or directories in the project root
+globs: ["*"]
+alwaysApply: true
+---
+
+# No Root Directory Creation
+
+Rule to prevent creating any files or directories in the project root.
+
+<rule>
+name: no-root-directory-creation
+description: Standards for preventing creation of files and directories in project root
+filters:
+  - type: file_extension
+    pattern: ".*"
+  - type: event
+    pattern: "file_create|file_modify"
+  - type: event
+    pattern: "file_create|file_modify"
+
+actions:
+  - type: reject
+    conditions:
+      - pattern: "^(?!.*integrations/.*$)"
+        message: "STOP: All new files and directories must be created in the integrations/ directory"
+
+  - type: suggest
+    message: |
+      When creating new projects or files:
+
+      1. ALWAYS create in integrations/ directory:
+         ```bash
+         integrations/your-project-name/
+         ```
+
+      2. NEVER create in root directory:
+         - No direct project creation
+         - No npm init in root
+         - No create-next-app in root
+         - No mkdir in root
+         - No file creation in root
+
+      3. Required steps:
+         - First verify integrations/ exists
+         - Create project in integrations/
+         - Keep root directory clean
+         - Follow established structure
+
+examples:
+  - input: |
+      # Bad: Creating in root
+      mkdir my-project
+      npm init my-project
+      create-next-app my-project
+
+      # Good: Creating in integrations
+      mkdir integrations/my-project
+      cd integrations/my-project
+      npm init
+      create-next-app .
+    output: "Always create new projects in the integrations/ directory"
+
+metadata:
+  priority: critical
+  version: 1.0
+</rule>
