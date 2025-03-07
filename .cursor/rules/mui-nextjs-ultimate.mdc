@@ -1,0 +1,207 @@
+---
+description: Standards for building sophisticated Material UI Next.js applications matching the ultimate challenge template
+globs: ["*"]
+alwaysApply: true
+---
+
+# MUI Next.js Ultimate Challenge Standards
+
+Standards for building sophisticated Material UI Next.js applications matching the ultimate challenge template.
+
+<rule>
+name: mui-nextjs-ultimate
+description: Build sophisticated Material UI Next.js applications with advanced features and modern UX
+filters:
+  - type: file_extension
+    pattern: "\\.(ts|tsx)$"
+  - type: event
+    pattern: "file_create|file_modify"
+
+actions:
+  - type: enforce
+    message: |
+      When building a sophisticated MUI Next.js application:
+
+      1. Project Structure:
+         ```
+         src/
+         ├── app/
+         │   ├── layout.tsx           # Root layout with metadata
+         │   ├── page.tsx             # Landing page
+         │   ├── root-client-layout.tsx # Client-side root with theme setup
+         │   └── dashboard/           # Dashboard module
+         │       ├── page.tsx         # Dashboard page
+         │       ├── components/      # Dashboard-specific components
+         │       └── lib/            # Dashboard utilities
+         ├── components/              # Shared components
+         │   ├── NavigationBar.tsx    # Main navigation
+         │   ├── Footer.tsx          # Site footer
+         │   └── shared/             # Reusable components
+         └── shared-theme/           # Theme configuration
+             ├── AppTheme.tsx        # Theme provider
+             ├── ColorModeIconDropdown.tsx
+             └── customizations/     # Theme customizations
+
+      2. Required Features:
+         - Dark/light mode toggle with theme persistence
+         - Responsive navigation with mobile menu
+         - Dashboard with data grid and charts
+         - Tree view navigation
+         - Card-based layout with hover effects
+         - Loading states and transitions
+         - Error boundaries and fallbacks
+         - SEO optimization with metadata
+         - Modern micro-interactions
+
+      3. Component Guidelines:
+         ```tsx
+         // Base component structure with animations
+         export default function Component() {
+           return (
+             <Box
+               sx={{
+                 position: 'relative',
+                 '&::before': {
+                   content: '""',
+                   position: 'absolute',
+                   top: 0,
+                   left: 0,
+                   right: 0,
+                   bottom: 0,
+                   background: theme => 
+                     theme.palette.mode === 'light'
+                       ? `radial-gradient(circle at 50% 50%, ${alpha(theme.palette.primary.main, 0.1)} 0%, transparent 50%)`
+                       : `radial-gradient(circle at 50% 50%, ${alpha(theme.palette.primary.main, 0.2)} 0%, transparent 50%)`,
+                   zIndex: 0,
+                 },
+               }}
+             >
+               {/* Component content */}
+             </Box>
+           );
+         }
+         ```
+
+      4. Navigation Requirements:
+         ```tsx
+         const StyledToolbar = styled(Toolbar)(({ theme }) => ({
+           display: 'flex',
+           alignItems: 'center',
+           justifyContent: 'space-between',
+           flexShrink: 0,
+           borderRadius: `calc(${theme.shape.borderRadius}px + 8px)`,
+           backdropFilter: 'blur(24px)',
+           backgroundColor: alpha(theme.palette.background.default, 0.4),
+           boxShadow: theme.shadows[1],
+           padding: '8px 12px',
+         }));
+         ```
+
+      5. Dashboard Features:
+         - Data grid with sorting and filtering
+         - Interactive charts and graphs
+         - Tree view navigation
+         - Card-based statistics
+         - Activity timeline
+         - User profile section
+         - Settings panel
+         - Search functionality
+
+      6. Animation Standards:
+         ```tsx
+         // Card hover effect
+         sx={{
+           transition: 'all 0.3s ease-in-out',
+           '&:hover': {
+             transform: 'translateY(-8px)',
+             boxShadow: (theme) =>
+               `0 12px 24px ${alpha(theme.palette.primary.main, 0.1)}`,
+           },
+         }}
+
+         // Button hover effect
+         sx={{
+           transition: 'all 0.3s ease-in-out',
+           '&:hover': {
+             transform: 'translateY(-2px)',
+             boxShadow: (theme) =>
+               `0 8px 16px ${alpha(theme.palette.primary.main, 0.2)}`,
+           },
+         }}
+
+         // Gradient text
+         sx={{
+           background: theme => theme.palette.mode === 'light'
+             ? `linear-gradient(45deg, ${theme.palette.primary.main}, ${theme.palette.primary.dark})`
+             : `linear-gradient(45deg, ${theme.palette.primary.light}, ${theme.palette.primary.main})`,
+           backgroundClip: 'text',
+           WebkitBackgroundClip: 'text',
+           WebkitTextFillColor: 'transparent',
+         }}
+         ```
+
+      7. Theme Integration:
+         - Use theme.palette for all colors
+         - Implement dark/light mode
+         - Use theme.spacing for layout
+         - Use theme.breakpoints for responsiveness
+         - Use theme.transitions for animations
+         - Use theme.shadows for elevation
+         - Use theme.typography for text styles
+
+      8. Performance Requirements:
+         - Implement React.lazy for code splitting
+         - Use Next.js Image component
+         - Enable CSS layer optimization
+         - Implement proper caching
+         - Use proper loading states
+         - Handle error boundaries
+         - Monitor bundle size
+
+      9. Testing Requirements:
+         - Unit tests for utilities
+         - Component tests
+         - Integration tests
+         - Performance testing
+         - Accessibility testing
+         - Cross-browser testing
+         - Mobile responsiveness
+
+examples:
+  - input: |
+      # Bad: Static components without animations
+      <Card>
+        <CardContent>Static content</CardContent>
+      </Card>
+
+      # Good: Interactive components with animations
+      <Card
+        sx={{
+          transition: 'all 0.3s ease-in-out',
+          '&:hover': {
+            transform: 'translateY(-8px)',
+            boxShadow: (theme) =>
+              `0 12px 24px ${alpha(theme.palette.primary.main, 0.1)}`,
+          },
+        }}
+      >
+        <CardContent>
+          <Typography
+            sx={{
+              background: theme => 
+                `linear-gradient(45deg, ${theme.palette.primary.main}, ${theme.palette.primary.dark})`,
+              backgroundClip: 'text',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+            }}
+          >
+            Interactive content
+          </Typography>
+        </CardContent>
+      </Card>
+    output: "Use interactive components with sophisticated animations and theme integration"
+
+metadata:
+  priority: high
+  version: 1.0
+</rule>
