@@ -1,79 +1,40 @@
-# MUI Templates Ultimate Challenge
+# MUI Cursor Integration
 
-A Next.js application that combines all Material UI templates into a single, seamless website experience. Built with React 19+, Material UI v6+, and Next.js 15.2+.
-
-## Features
-
-- Modern tech stack with latest versions:
-  - React 19+
-  - Material UI v6+
-  - Next.js 15.2+
-  - TypeScript
-- Unified navigation between all templates
-- Consistent theme and styling
-- Dark/light mode support
-- Responsive design
-- Type-safe components
-
-## Templates Included
-
-- About
-- Blog
-- Checkout
-- Dashboard
-- Marketing
-- Pricing
-- Sign In
-- Sign In Side
-- Sign Up
-
-## Getting Started
-
-1. Install dependencies:
-   ```bash
-   npm install
-   ```
-
-2. Run the development server:
-   ```bash
-   npm run dev
-   ```
-
-3. Open [http://localhost:3000](http://localhost:3000) in your browser.
+Experiments and templates for integrating Material UI with Cursor IDE, focusing on efficient development workflows and code reuse.
 
 ## Project Structure
 
-```
-src/
-├── app/                    # Next.js app directory
-│   ├── layout.tsx         # Root layout
-│   ├── page.tsx           # Home page
-│   ├── about/             # About page
-│   ├── blog/              # Blog page
-│   ├── checkout/          # Checkout page
-│   ├── dashboard/         # Dashboard page
-│   ├── marketing/         # Marketing page
-│   ├── pricing/           # Pricing page
-│   ├── sign-in/          # Sign In page
-│   ├── sign-in-side/     # Sign In Side page
-│   └── sign-up/          # Sign Up page
-├── components/            # Shared components
-└── shared-theme/         # Theme configuration
-```
+- `/.cursor/rules/` - Cursor IDE rules for consistent development practices
+- `/cursor-mui-templates/` - Base templates for MUI projects
+- `/integrations/` - Working examples of MUI templates integrated with different frameworks
+  - `cursor-mui-next-about/` - About page template with Next.js
+  - `cursor-mui-next-pricing/` - Pricing page template with Next.js
+- `/mui-docs-templates/` - Original MUI documentation templates (read-only reference)
+- `/mui-vite-ts/` - Base setup for MUI with Vite and TypeScript
+- `/ultimate-challenge/` - Comprehensive Next.js application combining all MUI templates
 
-## Development
+## Development Guidelines
 
-- Each template is implemented as a separate page in the `app` directory
-- Shared components are placed in the `components` directory
-- Theme configuration is in `shared-theme`
-- TypeScript is used throughout the project
-- Material UI v6 components and styling patterns are followed
-- Next.js App Router and Server Components are utilized where appropriate
+1. Never modify files in `/mui-docs-templates/` - these are reference implementations
+2. Use proper `.gitignore` files in each Next.js project
+3. Follow the established patterns in existing integrations
+4. Reuse components from base templates when possible
+5. Keep shared theme files synchronized across projects
 
-## Contributing
+## Getting Started
 
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request 
+Each project directory contains its own README with specific setup instructions. For new projects:
+
+1. Choose a base template from `/cursor-mui-templates/`
+2. Create a new directory in `/integrations/`
+3. Follow the integration patterns from existing examples
+4. Ensure proper `.gitignore` configuration
+5. Maintain consistent component and theme structure
+
+## Technology Stack
+
+- React 19+
+- Material UI v6+
+- Next.js 15.2+ (for Next.js integrations)
+- Vite 5+ (for Vite integrations)
+- TypeScript 5+ 
