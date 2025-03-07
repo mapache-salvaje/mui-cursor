@@ -229,6 +229,11 @@ const NAVIGATION_ITEMS: TreeViewBaseItem[] = [
 ];
 
 export default function Dashboard() {
+  const [paginationModel, setPaginationModel] = React.useState({
+    page: 0,
+    pageSize: 5,
+  });
+
   return (
     <Box
       sx={{
@@ -288,11 +293,8 @@ export default function Dashboard() {
                   <DataGridPro
                     rows={rows}
                     columns={columns}
-                    initialState={{
-                      pagination: {
-                        paginationModel: { page: 0, pageSize: 5 },
-                      },
-                    }}
+                    paginationModel={paginationModel}
+                    onPaginationModelChange={setPaginationModel}
                     pageSizeOptions={[5, 10]}
                     checkboxSelection
                     disableRowSelectionOnClick

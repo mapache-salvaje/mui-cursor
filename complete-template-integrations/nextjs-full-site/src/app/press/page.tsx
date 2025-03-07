@@ -16,23 +16,23 @@ const pressReleases = [
   {
     title: 'Company Announces Series B Funding Round',
     date: 'March 15, 2024',
-    image: '/images/press-1.jpg',
+    image: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=800&q=80',
     description: 'Leading technology company secures $50M in Series B funding to accelerate growth and innovation.',
-    link: '#',
+    link: '/press/series-b-funding',
   },
   {
     title: 'New Product Launch Success',
     date: 'February 28, 2024',
-    image: '/images/press-2.jpg',
+    image: 'https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&w=800&q=80',
     description: 'Revolutionary new product receives widespread acclaim from industry experts and users alike.',
-    link: '#',
+    link: '/press/product-launch',
   },
   {
     title: 'Global Expansion Milestone',
     date: 'January 10, 2024',
-    image: '/images/press-3.jpg',
+    image: 'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=800&q=80',
     description: 'Company celebrates successful expansion into Asian markets with new office openings.',
-    link: '#',
+    link: '/press/global-expansion',
   },
 ];
 
