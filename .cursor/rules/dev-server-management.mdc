@@ -1,0 +1,65 @@
+ ---
+description: Standards for managing development servers to prevent duplicate instances
+globs: ["*"]
+alwaysApply: true
+---
+
+# Development Server Management
+
+Standards for managing development servers to prevent duplicate instances.
+
+<rule>
+name: dev-server-management
+description: Prevent starting duplicate development servers for the same project
+filters:
+  - type: command
+    pattern: "(npm run dev|next dev|yarn dev)"
+  - type: event
+    pattern: "server_start"
+
+actions:
+  - type: reject
+    conditions:
+      - pattern: "npm run dev.*"
+        message: "A development server is already running for this project. Use the existing server or restart it with 'rs' if needed."
+
+  - type: suggest
+    message: |
+      When managing development servers:
+
+      1. Check Server Status:
+         - Before starting a new server, verify if one exists
+         - Note the port number being used
+         - Check if hot reload is active
+
+      2. Server Management:
+         - Use existing server when available
+         - Hot reload handles most changes automatically
+         - Use 'rs' to restart when necessary
+         - Only start new server if none exists
+
+      3. Project Separation:
+         - Track servers by project directory
+         - Allow multiple servers for different projects
+         - Use different ports for different projects
+         - Document port assignments
+
+      4. Configuration Changes:
+         - Hot reload for component/page changes
+         - Restart ('rs') for next.config.js changes
+         - Full restart after package.json changes
+
+examples:
+  - input: |
+      # Bad: Starting new server when one exists
+      npm run dev  # When server already running
+
+      # Good: Using existing server
+      # Let hot reload handle changes
+      # Or use 'rs' to restart if needed
+    output: "Use existing server or restart with 'rs'"
+
+metadata:
+  priority: high
+  version: 1.0
+</rule>
