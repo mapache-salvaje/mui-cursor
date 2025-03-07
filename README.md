@@ -14,8 +14,10 @@ Experiments and templates for integrating Material UI with Cursor IDE, focusing 
   - `/cursor-mui-vite-about/` - About page template with Vite
   - `/cursor-mui-vite-pricing/` - Pricing page template with Vite
 - `/mui-docs-templates/` - Original MUI documentation templates (read-only reference)
-- `/scaffolds/` - Base project setups
-  - `/mui-vite-ts/` - Base setup for MUI with Vite and TypeScript
+- `/mui-vite-ts/` - Base setup for MUI with Vite and TypeScript
+- `/nextjs-full-site/` - Next.js full site implementation
+- `/complete-template-integrations/` - Complete template integrations
+- `/src/` - Source files
 
 ## Development Guidelines
 

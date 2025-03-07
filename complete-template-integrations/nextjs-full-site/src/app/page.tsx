@@ -5,7 +5,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Divider from '@mui/material/Divider';
 import { Experimental_CssVarsProvider as CssVarsProvider } from '@mui/material/styles';
 import AppTheme from '@/shared-theme/AppTheme';
-import NavigationBar from '@/components/shared/NavigationBar';
+import AppAppBar from '@/components/shared/AppAppBar';
 import Hero from '@/components/marketing/Hero';
 import LogoCollection from '@/components/marketing/LogoCollection';
 import Highlights from '@/components/marketing/Highlights';
@@ -21,7 +21,7 @@ export default function MarketingPage() {
       <AppTheme>
         <CssBaseline enableColorScheme />
 
-        <NavigationBar />
+        <AppAppBar />
         <Hero />
         <div>
           <LogoCollection />
