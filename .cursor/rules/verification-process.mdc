@@ -1,0 +1,107 @@
+---
+description: Rule for enforcing a strict verification process before any action
+globs: ["*"]
+alwaysApply: true
+---
+
+# Verification Process
+
+Rule for enforcing a strict verification process before any action to prevent destructive changes.
+
+<rule>
+name: verification-process
+description: Enforce strict verification process before any action
+filters:
+  - type: event
+    pattern: "file_modify|file_create|file_delete"
+  - type: command
+    pattern: "(npm|yarn|pnpm|cd|ls|rm|cp|mv|git)"
+
+actions:
+  - type: enforce
+    message: |
+      MANDATORY VERIFICATION PROCESS:
+
+      1. Rule Dependencies (REQUIRED):
+         - First check verify-directory.mdc for directory verification
+         - Then check no-destructive-actions.mdc for destructive operations
+         - Then check no-template-modifications.mdc for template operations
+         - Finally apply this verification process
+
+      2. Directory Verification (REQUIRED):
+         ```bash
+         pwd  # MUST verify current directory
+         ls   # MUST verify contents
+         ```
+
+      3. File Operation Verification:
+         - Verify file exists before modification
+         - Check if file is in protected directory
+         - Document exact path being modified
+         - Verify file permissions
+         - Check file dependencies
+
+      4. Git Operation Verification:
+         - Never use destructive commands without approval
+         - Always verify changes before committing
+         - Follow exact commit/push commands
+         - Document all git operations
+         - Verify git status before changes
+
+      5. Template Operation Verification:
+         - NEVER modify mui-docs-templates directory
+         - Only copy FROM templates, never TO templates
+         - Document all template copying operations
+         - Verify template file existence
+         - Check template dependencies
+
+      6. Documentation Requirements:
+         - Document each verification step
+         - Record verification results
+         - Note any exceptions or issues
+         - Track verification history
+         - Update documentation as needed
+
+      7. Error Prevention:
+         - Stop if verification fails
+         - Report verification issues
+         - Get explicit approval for exceptions
+         - Document all decisions
+         - Learn from verification failures
+
+      8. Rule Integration:
+         - Apply rules in priority order
+         - Handle rule conflicts explicitly
+         - Document rule interactions
+         - Maintain rule consistency
+         - Update rule documentation
+
+examples:
+  - input: |
+      # Bad: No verification
+      "Let me modify this file..."
+      "I'll just run this command..."
+      "This should work..."
+
+      # Good: Full verification with rule dependencies
+      "First, checking rule dependencies:
+      - verify-directory.mdc: Directory verification required
+      - no-destructive-actions.mdc: No destructive operations
+      - no-template-modifications.mdc: Template protection
+      
+      Verifying directory:
+      pwd: /path/to/project
+      ls: package.json, src/, ...
+      
+      Verifying file:
+      - Exists: Yes
+      - Protected: No
+      - Path: src/components/Button.tsx
+      
+      Proceeding with modification..."
+    output: "Complete verification with rule dependencies before any action"
+
+metadata:
+  priority: critical
+  version: 1.1
+</rule>
